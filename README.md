@@ -4,7 +4,7 @@
 - Mi Wallpaper Carousel app by Xiaomi Inc. ported for any Android 5 and up non-Miui ROM.
 
 ## Screenshots
-- 
+- https://t.me/androidryukimods/361
 
 ## Requirements
 - Not in Miui ROM
@@ -35,4 +35,4 @@
 - https://www.paypal.me/reiryuki
 
 ## Download
-- 
+- https://www.pling.com/p/1680776/
