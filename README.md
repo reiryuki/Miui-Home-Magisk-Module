@@ -17,7 +17,7 @@
 - Reboot
 
 ## Tested on
-- DotOS ROM Android 11 arm64
+- DotOS ROM Android 11
 
 ## Optionals and Troubleshootings
 - https://t.me/androidryukimods/114
