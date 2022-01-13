@@ -11,9 +11,10 @@
 - Not in Miui ROM
 - Android 5 and up
 - Magisk installed
+- Miui Core v2.8 or above
 
 ## Installation Guide
-- Install [Miui Core Magisk Module](https://github.com/reiryuki/Miui-Core-Magisk-Module) first. Tap here: https://github.com/reiryuki/Miui-Core-Magisk-Module
+- Install [Miui Core Magisk Module](https://github.com/reiryuki/Miui-Core-Magisk-Module) v2.8 or above first. Tap here: https://github.com/reiryuki/Miui-Core-Magisk-Module
 - Install this module via Magisk app or Recovery
 - Reboot
 
