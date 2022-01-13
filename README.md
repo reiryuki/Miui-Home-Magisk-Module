@@ -1,7 +1,7 @@
-# Mi Wallpaper Carousel Magisk Module
+# Miui Home Magisk Module
 
 ## Descriptions
-- Mi Wallpaper Carousel app by Xiaomi Inc. ported for any Android 5 and up non-Miui ROM.
+- Miui Home, Mi Wallpaper, and Mi Wallpaper Carousel app by Xiaomi Inc. ported for any Android 5 and up non-Miui ROM.
 
 ## Screenshots
 - https://t.me/androidryukimods/361
