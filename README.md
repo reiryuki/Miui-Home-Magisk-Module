@@ -21,6 +21,11 @@
 ## Tested on
 - DotOS ROM Android 11
 
+## Bugs
+- Can't uninstall apps
+- Recents provider can't kill recents apps
+- The built-in Clock widget is not ported yet
+
 ## Optionals and Troubleshootings
 - https://t.me/androidryukimodsdiscussions/54012
 - https://t.me/androidryukimods/114
