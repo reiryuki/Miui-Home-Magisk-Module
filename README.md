@@ -16,7 +16,7 @@
 - Install [Miui Core Magisk Module](https://github.com/reiryuki/Miui-Core-Magisk-Module) first. Tap here: https://github.com/reiryuki/Miui-Core-Magisk-Module
 - Install this module via Magisk app or Recovery
 - Reboot
-- Change your default launcher in your Settings app
+- Change your default launcher to this Miui Home in your Settings app
 
 ## Tested on
 - DotOS ROM Android 11
