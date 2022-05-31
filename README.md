@@ -1,7 +1,7 @@
 # Miui Home Magisk Module
 
 ## Descriptions
-- Miui Home launcher, Mi Wallpaper, Mi Wallpaper Carousel, and Mi Search app by Xiaomi Inc.
+- System Launcher, Mi Wallpaper, Mi Wallpaper Carousel, Mi Search, & App Vault by Xiaomi Inc.
 
 ## Screenshots
 - https://t.me/androidryukimods/370
@@ -13,19 +13,22 @@
 - Magisk installed
 
 ## Installation Guide
+- Run any optional commands only if you need (see bellow).
 - Install [Miui Core Magisk Module](https://github.com/reiryuki/Miui-Core-Magisk-Module) first. Tap here: https://github.com/reiryuki/Miui-Core-Magisk-Module
-- Install this Miui Home Magisk Module via Magisk app or Recovery (download bellow)
+- Install this Miui Home Magisk Module via Magisk app or Recovery (download bellow).
 - Reboot
-- Change your default launcher to this Miui Home in your Settings app
+- Change your default launcher to this Miui Home in your Settings app.
 
 ## Tested on
 - DotOS ROM Android 11
 - AncientOS ROM Android 12
+- Nusantara ROM Android 12.1
 
 ## Bugs
 - Can't uninstall apps
 - Recents provider can't kill recents apps
 - The built-in Clock widget is not ported yet
+- Open-close apps animation doesn't show-up
 
 ## Optionals
 - https://t.me/androidryukimodsdiscussions/60861
