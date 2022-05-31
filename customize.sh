@@ -1,5 +1,12 @@
 ui_print " "
 
+# magisk
+if [ -d /sbin/.magisk ]; then
+  MAGISKTMP=/sbin/.magisk
+else
+  MAGISKTMP=`find /dev -mindepth 2 -maxdepth 2 -type d -name .magisk`
+fi
+
 # info
 MODVER=`grep_prop version $MODPATH/module.prop`
 MODVERCODE=`grep_prop versionCode $MODPATH/module.prop`
@@ -8,15 +15,6 @@ ui_print " Version=$MODVER"
 ui_print " VersionCode=$MODVERCODE"
 ui_print " MagiskVersion=$MAGISK_VER"
 ui_print " MagiskVersionCode=$MAGISK_VER_CODE"
-ui_print " "
-
-# bit
-if [ "$IS64BIT" != true ]; then
-  ui_print "- 32 bit"
-  rm -rf `find $MODPATH/system -type d -name *64`
-else
-  ui_print "- 64 bit"
-fi
 ui_print " "
 
 # sdk
@@ -54,13 +52,34 @@ else
   rm -f /data/adb/modules/MiuiCore/disable
 fi
 
+# global
+FILE=$MODPATH/service.sh
+if getprop | grep -Eq "miui.global\]: \[1"; then
+  ui_print "- Global mode"
+  rm -rf `find $MODPATH/system -type d -name QuickSearchBox -o -name PersonalAssistant`
+  sed -i 's/#g//g' $FILE
+  ui_print " "
+else
+  rm -rf `find $MODPATH/system -type d -name GlobalMinusScreen`
+fi
+
+# code
+NAME=ro.miui.ui.version.code
+if getprop | grep -Eq "miui.code\]: \[0"; then
+  ui_print "- Removing $NAME..."
+  sed -i "s/resetprop $NAME/#resetprop $NAME/g" $FILE2
+  ui_print " "
+fi
+
 # cleaning
 ui_print "- Cleaning..."
 APP="`ls $MODPATH/system/priv-app` `ls $MODPATH/system/app`"
 PKG="com.miui.home
      com.miui.miwallpaper
      com.mfashiongallery.emag
-     com.android.quicksearchbox"
+     com.android.quicksearchbox
+     com.miui.personalassistant
+     com.mi.android.globalminusscreen"
 if [ "$BOOTMODE" == true ]; then
   for PKGS in $PKG; do
     RES=`pm uninstall $PKGS`
@@ -69,26 +88,12 @@ fi
 for APPS in $APP; do
   rm -f `find /data/dalvik-cache /data/resource-cache -type f -name *$APPS*.apk`
 done
-rm -f $MODPATH/LICENSE
 rm -rf /metadata/magisk/$MODID
 rm -rf /mnt/vendor/persist/magisk/$MODID
 rm -rf /persist/magisk/$MODID
 rm -rf /data/unencrypted/magisk/$MODID
 rm -rf /cache/magisk/$MODID
 ui_print " "
-
-# power save
-PROP=`getprop power.save`
-FILE=$MODPATH/system/etc/sysconfig/*
-if [ "$PROP" == 1 ]; then
-  ui_print "- $MODNAME will not be allowed in power save."
-  ui_print "  It may save your battery but decreasing $MODNAME performance."
-  for PKGS in $PKG; do
-    sed -i "s/<allow-in-power-save package=\"$PKGS\"\/>//g" $FILE
-    sed -i "s/<allow-in-power-save package=\"$PKGS\" \/>//g" $FILE
-  done
-  ui_print " "
-fi
 
 # function
 conflict() {
@@ -186,20 +191,28 @@ fi
 # function
 extract_lib() {
   for APPS in $APP; do
-    ui_print "- Extracting $APPS.apk libs..."
+    ui_print "- Extracting..."
     FILE=`find $MODPATH/system -type f -name $APPS.apk`
-    DIR=`find $MODPATH/system -type d -name $APPS`/lib/$ARCH
+    if [ $APPS == QuickSearchBox ] && [ "$ARCH" == x64 ]; then
+      DIR=`find $MODPATH/system -type d -name $APPS`/lib/x86
+    else
+      DIR=`find $MODPATH/system -type d -name $APPS`/lib/"$ARCH"
+    fi
     mkdir -p $DIR
     rm -rf $TMPDIR/*
-    unzip -d $TMPDIR -o $FILE $DES
-    cp -f $TMPDIR/$DES $DIR
+    if [ $APPS == QuickSearchBox ] && [ "$ARCH" == x64 ]; then
+      unzip -d $TMPDIR -o $FILE lib/x86/*
+      cp -f $TMPDIR/lib/x86/* $DIR
+    else
+      unzip -d $TMPDIR -o $FILE $DES
+      cp -f $TMPDIR/$DES $DIR
+    fi
     ui_print " "
   done
 }
 
 # extract
-PROP=`getprop ro.product.cpu.abi`
-DES=lib/$PROP/*
+DES=lib/`getprop ro.product.cpu.abi`/*
 extract_lib
 
 # function
@@ -214,14 +227,15 @@ done
 hide_oat
 
 # permission
-if [ "$API" -gt 25 ]; then
+if [ "$API" -ge 26 ]; then
   ui_print "- Setting permission..."
-  magiskpolicy "dontaudit vendor_overlay_file labeledfs filesystem associate"
-  magiskpolicy "allow     vendor_overlay_file labeledfs filesystem associate"
-  magiskpolicy "dontaudit init vendor_overlay_file dir relabelfrom"
-  magiskpolicy "allow     init vendor_overlay_file dir relabelfrom"
-  magiskpolicy "dontaudit init vendor_overlay_file file relabelfrom"
-  magiskpolicy "allow     init vendor_overlay_file file relabelfrom"
+  magiskpolicy --live "type vendor_overlay_file"
+  magiskpolicy --live "dontaudit vendor_overlay_file labeledfs filesystem associate"
+  magiskpolicy --live "allow     vendor_overlay_file labeledfs filesystem associate"
+  magiskpolicy --live "dontaudit init vendor_overlay_file dir relabelfrom"
+  magiskpolicy --live "allow     init vendor_overlay_file dir relabelfrom"
+  magiskpolicy --live "dontaudit init vendor_overlay_file file relabelfrom"
+  magiskpolicy --live "allow     init vendor_overlay_file file relabelfrom"
   chcon -R u:object_r:vendor_overlay_file:s0 $MODPATH/system/product/overlay
   ui_print " "
 fi

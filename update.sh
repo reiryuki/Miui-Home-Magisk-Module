@@ -30,27 +30,45 @@ fi
 
 PROP=`getprop ro.product.cpu.abi`
 
+PKG=com.mfashiongallery.emag
+NAME="libmiuiblur.so
+      libmiuinative.so
+      libnativehelper.so"
+copy_library
+
+PKG=com.miui.miwallpaper
+NAME="libmiuiblur.so
+      libmiuinative.so
+      libnativehelper.so"
+copy_library
+
+PKG=com.android.quicksearchbox
+NAME="libmiuiblur.so
+      libmiuinative.so
+      libnativehelper.so"
+copy_library
+
+PKG=com.miui.personalassistant
+NAME="libmiuiblur.so
+      libmiuinative.so
+      libnativehelper.so"
+copy_library
+
+PKG=com.mi.android.globalminusscreen
+NAME="libmiuiblur.so
+      libmiuinative.so
+      libnativehelper.so"
+copy_library
+
 PKG=com.miui.home
-NAME="libmiuinative.so
+NAME="libmiuiblur.so
+      libmiuinative.so
       libthemeutils_jni.so
       libshell_jni.so
       libshell.so
       libnativehelper.so"
 copy_library
 
-PKG=com.mfashiongallery.emag
-NAME="libmiuinative.so
-      libnativehelper.so"
-copy_library
-
-PKG=com.miui.miwallpaper
-NAME="libmiuinative.so
-      libnativehelper.so"
-copy_library
-
-PKG=com.android.quicksearchbox
-NAME="libmiuinative.so
-      libnativehelper.so"
-copy_library
+killall $PKG
 
 
