@@ -18,6 +18,7 @@
 - Install this Miui Home Magisk Module via Magisk app or Recovery (download bellow).
 - Reboot
 - Change your default launcher to this Miui Home in your Settings app.
+- If the launcher is force closed, try to install this also: https://github.com/reiryuki/Miui-Settings-Mod-Magisk-Module
 
 ## Tested on
 - DotOS ROM Android 11
