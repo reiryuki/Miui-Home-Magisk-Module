@@ -52,6 +52,16 @@ else
   rm -f /data/adb/modules/MiuiCore/disable
 fi
 
+# miuisettingsmod
+if [ ! -d /data/adb/modules_update/MiuiSettingsMod ] && [ ! -d /data/adb/modules/MiuiSettingsMod ]; then
+  ui_print "! Miui Settings Mod Magisk Module is not installed."
+  ui_print "  Please read github installation guide!"
+  abort
+else
+  rm -f /data/adb/modules/MiuiSettingsMod/remove
+  rm -f /data/adb/modules/MiuiSettingsMod/disable
+fi
+
 # global
 FILE=$MODPATH/service.sh
 if getprop | grep -Eq "miui.global\]: \[1"; then
