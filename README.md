@@ -15,10 +15,10 @@
 ## Installation Guide
 - Run any optional commands only if you need (see bellow).
 - Install [Miui Core Magisk Module](https://github.com/reiryuki/Miui-Core-Magisk-Module) first. Tap here: https://github.com/reiryuki/Miui-Core-Magisk-Module
+- Install Miui Settings Mod Magisk Module. Tap here: https://github.com/reiryuki/Miui-Settings-Mod-Magisk-Module
 - Install this Miui Home Magisk Module via Magisk app or Recovery (download bellow).
 - Reboot
-- Change your default launcher to this Miui Home in your Settings app.
-- If the launcher is force closed, install this also: https://github.com/reiryuki/Miui-Settings-Mod-Magisk-Module
+- Change your default launcher to this Miui Home system launcher via Settings app.
 
 ## Tested on
 - DotOS ROM Android 11
