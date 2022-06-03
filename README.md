@@ -11,6 +11,8 @@
 - NOT in Miui ROM
 - Android 5 and up
 - Magisk installed
+- Miui Core Magisk Module installed
+- Miui Settings Mod Magisk Module installed
 
 ## Installation Guide
 - Run any optional commands only if you need (see bellow).
