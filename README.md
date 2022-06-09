@@ -30,8 +30,8 @@
 ## Bugs
 - Can't uninstall apps
 - Recents provider can't kill recents apps
-- The built-in Clock widget is not ported yet
 - Open-close apps animation doesn't show-up
+- Navbar gestures while using full screen swipe gestures
 
 ## Optionals
 - https://t.me/androidryukimodsdiscussions/60861
