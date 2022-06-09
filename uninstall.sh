@@ -20,5 +20,6 @@ rm -rf /persist/magisk/"$MODID"
 rm -rf /data/unencrypted/magisk/"$MODID"
 rm -rf /cache/magisk/"$MODID"
 rm -rf /data/system/theme
+rm -rf /data/system/theme_magic
 
 

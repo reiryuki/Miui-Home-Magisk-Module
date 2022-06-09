@@ -83,7 +83,6 @@ fi
 
 # cleaning
 ui_print "- Cleaning..."
-APP="`ls $MODPATH/system/priv-app` `ls $MODPATH/system/app`"
 PKG="com.miui.home
      com.miui.miwallpaper
      com.mfashiongallery.emag
@@ -95,9 +94,6 @@ if [ "$BOOTMODE" == true ]; then
     RES=`pm uninstall $PKGS`
   done
 fi
-for APPS in $APP; do
-  rm -f `find /data/dalvik-cache /data/resource-cache -type f -name *$APPS*.apk`
-done
 rm -rf /metadata/magisk/$MODID
 rm -rf /mnt/vendor/persist/magisk/$MODID
 rm -rf /persist/magisk/$MODID
@@ -140,7 +136,7 @@ if getprop | grep -Eq "miui.recents\]: \[1"; then
   conflict
   ui_print " "
 else
-  rm -rf $MODPATH/system/product
+  rm -rf $MODPATH/system/product/overlay
 fi
 
 # function
@@ -222,6 +218,7 @@ extract_lib() {
 }
 
 # extract
+APP="`ls $MODPATH/system/priv-app` `ls $MODPATH/system/app`"
 DES=lib/`getprop ro.product.cpu.abi`/*
 extract_lib
 
@@ -239,13 +236,6 @@ hide_oat
 # permission
 if [ "$API" -ge 26 ]; then
   ui_print "- Setting permission..."
-  magiskpolicy --live "type vendor_overlay_file"
-  magiskpolicy --live "dontaudit vendor_overlay_file labeledfs filesystem associate"
-  magiskpolicy --live "allow     vendor_overlay_file labeledfs filesystem associate"
-  magiskpolicy --live "dontaudit init vendor_overlay_file dir relabelfrom"
-  magiskpolicy --live "allow     init vendor_overlay_file dir relabelfrom"
-  magiskpolicy --live "dontaudit init vendor_overlay_file file relabelfrom"
-  magiskpolicy --live "allow     init vendor_overlay_file file relabelfrom"
   chcon -R u:object_r:vendor_overlay_file:s0 $MODPATH/system/product/overlay
   ui_print " "
 fi
