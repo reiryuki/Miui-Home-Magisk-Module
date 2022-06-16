@@ -64,5 +64,7 @@ magiskpolicy --live "dontaudit { system_app priv_app platform_app untrusted_app_
 magiskpolicy --live "allow     { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } rs_exec file { read open execute execute_no_trans getattr }"
 magiskpolicy --live "dontaudit { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } app_data_file file execute"
 magiskpolicy --live "allow     { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } app_data_file file execute"
+magiskpolicy --live "dontaudit { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } proc_pid_max file read"
+magiskpolicy --live "allow     { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } proc_pid_max file read"
 
 
