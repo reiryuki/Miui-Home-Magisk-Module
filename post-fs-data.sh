@@ -11,9 +11,8 @@ if [ -f $FILE ]; then
   sh $FILE
 fi
 
-# dependency
-#rm -f /data/adb/modules/MiuiCore/remove
-#rm -f /data/adb/modules/MiuiCore/disable
+# conflict
+#rtouch /data/adb/modules/quickstepswitcher/remove
 
 # directory
 DIR=/data/system/theme

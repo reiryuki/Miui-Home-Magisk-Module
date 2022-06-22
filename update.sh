@@ -30,6 +30,15 @@ fi
 
 PROP=`getprop ro.product.cpu.abi`
 
+PKG=com.miui.home
+NAME="libmiuiblur.so
+      libmiuinative.so
+      libthemeutils_jni.so
+      libshell_jni.so
+      libshell.so
+      libnativehelper.so"
+copy_library
+
 PKG=com.mfashiongallery.emag
 NAME="libmiuiblur.so
       libmiuinative.so
@@ -60,15 +69,7 @@ NAME="libmiuiblur.so
       libnativehelper.so"
 copy_library
 
-PKG=com.miui.home
-NAME="libmiuiblur.so
-      libmiuinative.so
-      libthemeutils_jni.so
-      libshell_jni.so
-      libshell.so
-      libnativehelper.so"
-copy_library
-
-killall $PKG
+killall com.miui.home
+pm clear com.miui.personalassistant
 
 
