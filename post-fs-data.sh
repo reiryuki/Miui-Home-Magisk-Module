@@ -1,5 +1,6 @@
 mount -o rw,remount /data
 MODPATH=${0%/*}
+API=`getprop ro.build.version.sdk`
 
 # debug
 exec 2>$MODPATH/debug-pfsd.log
@@ -11,8 +12,14 @@ if [ -f $FILE ]; then
   sh $FILE
 fi
 
+# context
+if [ "$API" -ge 26 ]; then
+  chcon -R u:object_r:vendor_overlay_file:s0 $MODPATH/system/product/overlay
+fi
+
 # conflict
 #rtouch /data/adb/modules/quickstepswitcher/remove
+#rtouch /data/adb/modules/quickswitch/remove
 
 # directory
 DIR=/data/system/theme

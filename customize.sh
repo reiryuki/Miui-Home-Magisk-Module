@@ -55,7 +55,8 @@ else
   rm -f /data/adb/modules/MiuiCore/disable
 fi
 
-# miuisettingsmod
+# function
+require_miuisettingsmod() {
 if [ ! -d /data/adb/modules_update/MiuiSettingsMod ] && [ ! -d /data/adb/modules/MiuiSettingsMod ]; then
   ui_print "! Miui Settings Mod Magisk Module is not installed."
   ui_print "  Please read github installation guide!"
@@ -64,6 +65,7 @@ else
   rm -f /data/adb/modules/MiuiSettingsMod/remove
   rm -f /data/adb/modules/MiuiSettingsMod/disable
 fi
+}
 
 # global
 FILE=$MODPATH/service.sh
@@ -135,7 +137,7 @@ conflict
 # recents
 if [ "`grep_prop miui.recents $OPTIONALS`" == 1 ]; then
   ui_print "- $MODNAME recents provider will be activated"
-  NAME=quickstepswitcher
+  NAME="quickstepswitcher quickswitch"
   conflict
   sed -i 's/#r//g' $MODPATH/post-fs-data.sh
   ui_print " "
@@ -234,12 +236,6 @@ done
 # hide
 hide_oat
 
-# permission
-if [ "$API" -ge 26 ]; then
-  ui_print "- Setting permission..."
-  chcon -R u:object_r:vendor_overlay_file:s0 $MODPATH/system/product/overlay
-  ui_print " "
-fi
 
 
 
