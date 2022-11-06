@@ -2,5 +2,3 @@
 <config>
     <hidden-api-whitelisted-app package="com.mfashiongallery.emag"/>
 </config>
-
-
