@@ -37,7 +37,7 @@
 - Android 12.1 Nusantara ROM
 - Android 13 AOSP ROM
 
-## Know Issues
+## Known Issues
 - Can't uninstall apps via home launcher
 - Recents provider can't kill recents apps
 - Open-close apps animation doesn't show-up
