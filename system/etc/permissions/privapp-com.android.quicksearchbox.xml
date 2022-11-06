@@ -10,9 +10,7 @@
         <permission name="android.permission.READ_SEARCH_INDEXABLES"/>
         <permission name="android.permission.CHANGE_COMPONENT_ENABLED_STATE"/>
         <permission name="android.permission.WRITE_SECURE_SETTINGS"/>
-        <!-- For Android 9 and bellow -->
+        <!-- Android 9 and bellow -->
         <permission name="android.permission.READ_FRAME_BUFFER"/>
     </privapp-permissions>
 </permissions>
-
-

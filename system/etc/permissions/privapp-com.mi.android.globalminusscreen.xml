@@ -8,5 +8,3 @@
         <permission name="android.permission.BIND_REMOTEVIEWS"/>
     </privapp-permissions>
 </permissions>
-
-
