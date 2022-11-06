@@ -64,8 +64,7 @@ appops set $PKG SYSTEM_ALERT_WINDOW allow
 # grant
 PKG=com.miui.miwallpaper
 pm grant $PKG android.permission.READ_PHONE_STATE
-pm grant $PKG android.permission.READ_EXTERNAL_STORAGE
-pm grant $PKG android.permission.WRITE_EXTERNAL_STORAGE
+grant_permission
 
 # grant
 PKG=com.mfashiongallery.emag
@@ -85,6 +84,9 @@ PKG=com.miui.personalassistant
 if pm list packages | grep $PKG; then
   grant_permission
   appops set $PKG SYSTEM_ALERT_WINDOW allow
+  if [ "$API" -ge 33 ]; then
+    appops set $PKG ACCESS_RESTRICTED_SETTINGS allow
+  fi
 fi
 
 # grant
