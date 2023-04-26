@@ -40,9 +40,9 @@
 - Android 13 CrDroid ROM
 
 ## Known Issues
-- Can't uninstall apps via home launcher
-- Recents provider can't kill recents apps
-- Navbar gestures doesn't work while using full screen swipe gestures
+- Uninstalling an app via home launcher requires 2 confirmations
+- Recents provider can't close recents apps
+- Navbar gestures doesn't work while using full screen swipe gestures if the recents provider is activated
 
 ## Optionals
 - https://t.me/androidryukimodsdiscussions/60861
