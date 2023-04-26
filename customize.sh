@@ -1,7 +1,5 @@
 # space
-if [ "$BOOTMODE" == true ]; then
-  ui_print " "
-fi
+ui_print " "
 
 # magisk
 if [ -d /sbin/.magisk ]; then
@@ -19,12 +17,23 @@ fi
 SYSTEM=`realpath $MIRROR/system`
 PRODUCT=`realpath $MIRROR/product`
 VENDOR=`realpath $MIRROR/vendor`
-SYSTEM_EXT=`realpath $MIRROR/system/system_ext`
-ODM=`realpath /odm`
-MY_PRODUCT=`realpath /my_product`
+SYSTEM_EXT=`realpath $MIRROR/system_ext`
+if [ -d $MIRROR/odm ]; then
+  ODM=`realpath $MIRROR/odm`
+else
+  ODM=`realpath /odm`
+fi
+if [ -d $MIRROR/my_product ]; then
+  MY_PRODUCT=`realpath $MIRROR/my_product`
+else
+  MY_PRODUCT=`realpath /my_product`
+fi
 
 # optionals
 OPTIONALS=/sdcard/optionals.prop
+if [ ! -f $OPTIONALS ]; then
+  touch $OPTIONALS
+fi
 
 # info
 MODVER=`grep_prop version $MODPATH/module.prop`
@@ -56,13 +65,12 @@ if [ "$BOOTMODE" != true ]; then
   mount -o rw -t auto /dev/block/bootdevice/by-name/metadata /metadata
 fi
 
-# sepolicy.rule
-FILE=$MODPATH/sepolicy.sh
-DES=$MODPATH/sepolicy.rule
-if [ -f $FILE ] && [ "`grep_prop sepolicy.sh $OPTIONALS`" != 1 ]; then
+# sepolicy
+FILE=$MODPATH/sepolicy.rule
+DES=$MODPATH/sepolicy.pfsd
+if [ "`grep_prop sepolicy.sh $OPTIONALS`" == 1 ]\
+&& [ -f $FILE ]; then
   mv -f $FILE $DES
-  sed -i 's/magiskpolicy --live "//g' $DES
-  sed -i 's/"//g' $DES
 fi
 
 # miuicore
@@ -108,15 +116,10 @@ fi
 
 # cleaning
 ui_print "- Cleaning..."
-PKG="com.miui.home
-     com.miui.miwallpaper
-     com.mfashiongallery.emag
-     com.android.quicksearchbox
-     com.miui.personalassistant
-     com.mi.android.globalminusscreen"
+PKG=`cat $MODPATH/package.txt`
 if [ "$BOOTMODE" == true ]; then
   for PKGS in $PKG; do
-    RES=`pm uninstall $PKGS`
+    RES=`pm uninstall $PKGS 2>/dev/null`
   done
 fi
 rm -rf /metadata/magisk/$MODID
@@ -131,7 +134,7 @@ conflict() {
 for NAMES in $NAME; do
   DIR=/data/adb/modules_update/$NAMES
   if [ -f $DIR/uninstall.sh ]; then
-    . $DIR/uninstall.sh
+    sh $DIR/uninstall.sh
   fi
   rm -rf $DIR
   DIR=/data/adb/modules/$NAMES
@@ -139,7 +142,7 @@ for NAMES in $NAME; do
   touch $DIR/remove
   FILE=/data/adb/modules/$NAMES/uninstall.sh
   if [ -f $FILE ]; then
-    . $FILE
+    sh $FILE
     rm -f $FILE
   fi
   rm -rf /metadata/magisk/$NAMES
@@ -157,8 +160,9 @@ conflict
 # recents
 if [ "`grep_prop miui.recents $OPTIONALS`" == 1 ]; then
   ui_print "- $MODNAME recents provider will be activated"
-  NAME="quickstepswitcher quickswitch"
-  conflict
+  ui_print "  Quick Switch module will be disabled"
+  touch /data/adb/modules/quickstepswitcher/disable
+  touch /data/adb/modules/quickswitch/disable
   sed -i 's/#r//g' $MODPATH/post-fs-data.sh
   ui_print " "
 else
@@ -168,11 +172,11 @@ fi
 # function
 cleanup() {
 if [ -f $DIR/uninstall.sh ]; then
-  . $DIR/uninstall.sh
+  sh $DIR/uninstall.sh
 fi
 DIR=/data/adb/modules_update/$MODID
 if [ -f $DIR/uninstall.sh ]; then
-  . $DIR/uninstall.sh
+  sh $DIR/uninstall.sh
 fi
 }
 
@@ -234,13 +238,15 @@ fi
 
 # function
 extract_lib() {
-  for APPS in $APP; do
+for APPS in $APP; do
+  FILE=`find $MODPATH/system -type f -name $APPS.apk`
+  if [ -f `dirname $FILE`/extract ]; then
+    rm -f `dirname $FILE`/extract
     ui_print "- Extracting..."
-    FILE=`find $MODPATH/system -type f -name $APPS.apk`
     if [ $APPS == QuickSearchBox ] && [ "$ARCH" == x64 ]; then
-      DIR=`find $MODPATH/system -type d -name $APPS`/lib/x86
+      DIR=`dirname $FILE`/lib/x86
     else
-      DIR=`find $MODPATH/system -type d -name $APPS`/lib/"$ARCH"
+      DIR=`dirname $FILE`/lib/$ARCH
     fi
     mkdir -p $DIR
     rm -rf $TMPDIR/*
@@ -252,15 +258,9 @@ extract_lib() {
       cp -f $TMPDIR/$DES $DIR
     fi
     ui_print " "
-  done
+  fi
+done
 }
-
-# extract
-APP="`ls $MODPATH/system/priv-app` `ls $MODPATH/system/app`"
-DES=lib/`getprop ro.product.cpu.abi`/*
-extract_lib
-
-# function
 hide_oat() {
 for APPS in $APP; do
   mkdir -p `find $MODPATH/system -type d -name $APPS`/oat
@@ -268,8 +268,27 @@ for APPS in $APP; do
 done
 }
 
+# extract
+APP="`ls $MODPATH/system/priv-app` `ls $MODPATH/system/app`"
+DES=lib/`getprop ro.product.cpu.abi`/*
+extract_lib
 # hide
 hide_oat
+
+# media
+if [ ! -d $PRODUCT/media ] && [ -d $SYSTEM/media ]; then
+  ui_print "- Using /system/media instead of /product/media"
+  mv -f $MODPATH/system/product/media $MODPATH/system
+  rm -rf $MODPATH/system/product
+  sed -i 's|/product|/system|g' $MODPATH/system/media/theme/.data/meta/*/*.mrm
+  ui_print " "
+elif [ ! -d $PRODUCT/media ] && [ ! -d $SYSTEM/media ]; then
+  ui_print "! /product/media & /system/media not found"
+  ui_print " "
+fi
+
+
+
 
 
 

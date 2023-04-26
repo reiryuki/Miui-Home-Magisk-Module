@@ -7,9 +7,9 @@ exec 2>$MODPATH/debug-pfsd.log
 set -x
 
 # run
-FILE=$MODPATH/sepolicy.sh
+FILE=$MODPATH/sepolicy.pfsd
 if [ -f $FILE ]; then
-  . $FILE
+  magiskpolicy --live --apply $FILE
 fi
 
 # context
@@ -18,8 +18,8 @@ if [ "$API" -ge 26 ]; then
 fi
 
 # conflict
-#rtouch /data/adb/modules/quickstepswitcher/remove
-#rtouch /data/adb/modules/quickswitch/remove
+#rtouch /data/adb/modules/quickstepswitcher/disable
+#rtouch /data/adb/modules/quickswitch/disable
 
 # directory
 DIR=/data/system/theme
@@ -47,5 +47,9 @@ if [ -f $FILE ]; then
   . $FILE
   rm -f $FILE
 fi
+
+
+
+
 
 

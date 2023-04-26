@@ -1,66 +1,77 @@
 ## MiuiHome
 
 # debug
-magiskpolicy --live "dontaudit system_server system_file file write"
-magiskpolicy --live "allow     system_server system_file file write"
+dontaudit system_server system_file file write
+allow     system_server system_file file write
 
 # context
-magiskpolicy --live "type vendor_overlay_file"
-magiskpolicy --live "type theme_data_file"
-magiskpolicy --live "type app_data_file"
-magiskpolicy --live "dontaudit { vendor_overlay_file theme_data_file app_data_file } labeledfs filesystem associate"
-magiskpolicy --live "allow     { vendor_overlay_file theme_data_file app_data_file } labeledfs filesystem associate"
-magiskpolicy --live "dontaudit init { vendor_overlay_file theme_data_file app_data_file } dir relabelfrom"
-magiskpolicy --live "allow     init { vendor_overlay_file theme_data_file app_data_file } dir relabelfrom"
-magiskpolicy --live "dontaudit init { vendor_overlay_file theme_data_file app_data_file } file relabelfrom"
-magiskpolicy --live "allow     init { vendor_overlay_file theme_data_file app_data_file } file relabelfrom"
+create { system_lib_file vendor_file vendor_configs_file vendor_overlay_file theme_data_file app_data_file }
+dontaudit { system_file system_lib_file vendor_file vendor_configs_file vendor_overlay_file theme_data_file app_data_file } labeledfs filesystem associate
+allow     { system_file system_lib_file vendor_file vendor_configs_file vendor_overlay_file theme_data_file app_data_file } labeledfs filesystem associate
+dontaudit init { system_file system_lib_file vendor_file vendor_configs_file vendor_overlay_file theme_data_file app_data_file } { dir file } relabelfrom
+allow     init { system_file system_lib_file vendor_file vendor_configs_file vendor_overlay_file theme_data_file app_data_file } { dir file } relabelfrom
 
 # service_manager
-magiskpolicy --live "allow { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } default_android_service service_manager find"
+allow { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } default_android_service service_manager find
 
 # dir
-magiskpolicy --live "dontaudit { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } { theme_data_file app_data_file } dir { read open add_name search }"
-magiskpolicy --live "allow     { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } { theme_data_file app_data_file } dir { read open add_name search }"
+dontaudit { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } { theme_data_file app_data_file } dir { read open add_name search }
+allow     { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } { theme_data_file app_data_file } dir { read open add_name search }
 
 # file
-magiskpolicy --live "dontaudit { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } { theme_data_file app_data_file } file { create write open getattr unlink }"
-magiskpolicy --live "allow     { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } { theme_data_file app_data_file } file { create write open getattr unlink }"
-magiskpolicy --live "dontaudit { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } apk_data_file file ioctl"
-magiskpolicy --live "allow     { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } apk_data_file file ioctl"
-magiskpolicy --live "dontaudit { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } incremental_prop file { read open getattr }"
-magiskpolicy --live "allow     { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } incremental_prop file { read open getattr }"
-magiskpolicy --live "dontaudit { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } vendor_default_prop file map"
-magiskpolicy --live "allow     { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } vendor_default_prop file map"
+dontaudit { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } { theme_data_file app_data_file } file { create write open getattr unlink }
+allow     { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } { theme_data_file app_data_file } file { create write open getattr unlink }
+dontaudit { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } apk_data_file file ioctl
+allow     { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } apk_data_file file ioctl
+dontaudit { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } incremental_prop file { read open getattr }
+allow     { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } incremental_prop file { read open getattr }
+dontaudit { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } vendor_default_prop file map
+allow     { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } vendor_default_prop file map
 
 # unix_stream_socket
-magiskpolicy --live "dontaudit { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } zygote unix_stream_socket getopt"
-magiskpolicy --live "allow     { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } zygote unix_stream_socket getopt"
+dontaudit { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } zygote unix_stream_socket getopt
+allow     { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } zygote unix_stream_socket getopt
 
 
 ## GlobalFashiongallery
 
 # fd
-magiskpolicy --live "dontaudit rs { surfaceflinger hal_graphics_allocator_default } fd use"
-magiskpolicy --live "allow     rs { surfaceflinger hal_graphics_allocator_default } fd use"
+dontaudit rs { surfaceflinger hal_graphics_allocator_default } fd use
+allow     rs { surfaceflinger hal_graphics_allocator_default } fd use
 
 # tcp_socket
-magiskpolicy --live "dontaudit rs { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } tcp_socket { read write }"
-magiskpolicy --live "allow     rs { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } tcp_socket { read write }"
+dontaudit rs { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } tcp_socket { read write }
+allow     rs { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } tcp_socket { read write }
 
 # fifo_file
-magiskpolicy --live "dontaudit rs { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } fifo_file { read write }"
-magiskpolicy --live "allow     rs { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } fifo_file { read write }"
+dontaudit rs { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } fifo_file { read write }
+allow     rs { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } fifo_file { read write }
 
 # unix_stream_socket
-magiskpolicy --live "dontaudit rs surfaceflinger unix_stream_socket { read write }"
-magiskpolicy --live "allow     rs surfaceflinger unix_stream_socket { read write }"
+dontaudit rs surfaceflinger unix_stream_socket { read write }
+allow     rs surfaceflinger unix_stream_socket { read write }
 
 # file
-magiskpolicy --live "dontaudit { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } rs_exec file { read open execute execute_no_trans getattr }"
-magiskpolicy --live "allow     { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } rs_exec file { read open execute execute_no_trans getattr }"
-magiskpolicy --live "dontaudit { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } app_data_file file execute"
-magiskpolicy --live "allow     { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } app_data_file file execute"
-magiskpolicy --live "dontaudit { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } proc_pid_max file { read open }"
-magiskpolicy --live "allow     { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } proc_pid_max file { read open }"
+dontaudit { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } rs_exec file { read open execute execute_no_trans getattr }
+allow     { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } rs_exec file { read open execute execute_no_trans getattr }
+dontaudit { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } app_data_file file execute
+allow     { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } app_data_file file execute
+dontaudit { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } proc_pid_max file { read open }
+allow     { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } proc_pid_max file { read open }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

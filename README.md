@@ -28,6 +28,7 @@
 - Install this module https://www.pling.com/p/1680776/ via Magisk app or Recovery
 - If you want App Vault to be working, install Miui Security Magisk Module: https://github.com/reiryuki/Miui-Security-Center-Magisk-Module
 - Reboot
+- Go to app info of Mi Wallpaper Carousel and allow the network access
 - Change your default launcher to this Miui Home system launcher via Settings
 - To use Mi Wallpaper Carousel slideshow, long tap home screen, tap wallpaper image, tap Live Wallpaper Picker, tap Mi Wallpaper Carousel, set wallpaper both first, then enable slideshow via Mi Wallpaper Carousel app.
 
@@ -36,11 +37,11 @@
 - Android 12 AncientOS ROM
 - Android 12.1 Nusantara ROM
 - Android 13 AOSP ROM
+- Android 13 CrDroid ROM
 
 ## Known Issues
 - Can't uninstall apps via home launcher
 - Recents provider can't kill recents apps
-- Open-close apps animation doesn't show-up
 - Navbar gestures doesn't work while using full screen swipe gestures
 
 ## Optionals

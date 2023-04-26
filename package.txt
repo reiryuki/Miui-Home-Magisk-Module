@@ -1,0 +1,7 @@
+com.miui.home
+com.miui.home.recents.overlay
+com.mfashiongallery.emag
+com.miui.miwallpaper
+com.miui.personalassistant
+com.mi.android.globalminusscreen
+com.android.quicksearchbox

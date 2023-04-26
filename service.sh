@@ -9,28 +9,34 @@ set -x
 PROP=`getprop ro.product.device`
 resetprop --delete ro.product.mod_device
 #gresetprop ro.product.mod_device "$PROP"_global
-resetprop ro.miui.ui.version.code 11
+resetprop ro.miui.ui.version.code 14
 
 # wait
-sleep 60
+until [ "`getprop sys.boot_completed`" == "1" ]; do
+  sleep 10
+done
 
 # function
 grant_permission() {
-UID=`pm list packages -U | grep $PKG | sed -n -e "s/package:$PKG uid://p"`
+appops set $PKG WRITE_SETTINGS allow
+appops set $PKG SYSTEM_ALERT_WINDOW allow
 pm grant $PKG android.permission.READ_EXTERNAL_STORAGE
 pm grant $PKG android.permission.WRITE_EXTERNAL_STORAGE
-pm grant $PKG android.permission.ACCESS_MEDIA_LOCATION 2>/dev/null
+if [ "$API" -ge 29 ]; then
+  pm grant $PKG android.permission.ACCESS_MEDIA_LOCATION 2>/dev/null
+  appops set $PKG ACCESS_MEDIA_LOCATION allow
+fi
 if [ "$API" -ge 33 ]; then
+  (
   pm grant $PKG android.permission.READ_MEDIA_AUDIO
   pm grant $PKG android.permission.READ_MEDIA_VIDEO
   pm grant $PKG android.permission.READ_MEDIA_IMAGES
+  ) 2>/dev/null
+  appops set $PKG ACCESS_RESTRICTED_SETTINGS allow
 fi
-appops set --uid $UID LEGACY_STORAGE allow
 appops set $PKG LEGACY_STORAGE allow
 appops set $PKG READ_EXTERNAL_STORAGE allow
 appops set $PKG WRITE_EXTERNAL_STORAGE allow
-appops set $PKG ACCESS_MEDIA_LOCATION allow
-appops set --uid $UID ACCESS_MEDIA_LOCATION allow
 appops set $PKG READ_MEDIA_AUDIO allow
 appops set $PKG READ_MEDIA_VIDEO allow
 appops set $PKG READ_MEDIA_IMAGES allow
@@ -45,21 +51,27 @@ fi
 if [ "$API" -ge 31 ]; then
   appops set $PKG MANAGE_MEDIA allow
 fi
+PKGOPS=`appops get $PKG`
+UID=`dumpsys package $PKG 2>/dev/null | grep -m 1 userId= | sed 's/    userId=//'`
+if [ "$UID" -gt 9999 ]; then
+  appops set --uid "$UID" LEGACY_STORAGE allow
+  if [ "$API" -ge 29 ]; then
+    appops set --uid "$UID" ACCESS_MEDIA_LOCATION allow
+  fi
+  UIDOPS=`appops get --uid "$UID"`
+fi
 }
 
 # grant
 PKG=com.miui.home
 pm grant $PKG android.permission.READ_CALENDAR
 pm grant $PKG android.permission.WRITE_CALENDAR
-pm grant $PKG android.permission.ACCESS_COARSE_LOCATION
-pm grant $PKG android.permission.ACCESS_FINE_LOCATION
 pm grant $PKG android.permission.READ_PHONE_STATE
 pm grant $PKG android.permission.CALL_PHONE
 pm grant $PKG android.permission.CAMERA
 pm grant $PKG android.permission.READ_CONTACTS
-grant_permission
 appops set $PKG GET_USAGE_STATS allow
-appops set $PKG SYSTEM_ALERT_WINDOW allow
+grant_permission
 
 # grant
 PKG=com.miui.miwallpaper
@@ -76,17 +88,12 @@ if pm list packages | grep $PKG; then
   pm grant $PKG android.permission.READ_CONTACTS
   pm grant $PKG android.permission.READ_PHONE_STATE
   grant_permission
-  appops set $PKG SYSTEM_ALERT_WINDOW allow
 fi
 
 # grant
 PKG=com.miui.personalassistant
 if pm list packages | grep $PKG; then
   grant_permission
-  appops set $PKG SYSTEM_ALERT_WINDOW allow
-  if [ "$API" -ge 33 ]; then
-    appops set $PKG ACCESS_RESTRICTED_SETTINGS allow
-  fi
 fi
 
 # grant
@@ -94,10 +101,21 @@ PKG=com.mi.android.globalminusscreen
 if pm list packages | grep $PKG; then
   pm grant $PKG android.permission.READ_CALENDAR
   pm grant $PKG android.permission.WRITE_CALENDAR
-  grant_permission
-  appops set $PKG SYSTEM_ALERT_WINDOW allow
   appops set $PKG GET_USAGE_STATS allow
-  appops set $PKG WRITE_SETTINGS allow
+  grant_permission
 fi
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
