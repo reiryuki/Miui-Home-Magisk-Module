@@ -49,7 +49,7 @@ PKG=com.miui.miwallpaper
 NAME="libmiuiblur.so
       libmiuinative.so
       libnativehelper.so"
-#copy_library
+copy_library
 
 PKG=com.android.quicksearchbox
 NAME="libmiuiblur.so
