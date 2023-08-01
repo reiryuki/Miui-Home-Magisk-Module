@@ -1,7 +1,7 @@
 MODPATH=${0%/*}
 API=`getprop ro.build.version.sdk`
 
-# debug
+# log
 exec 2>$MODPATH/debug.log
 set -x
 
@@ -52,7 +52,7 @@ if [ "$API" -ge 31 ]; then
   appops set $PKG MANAGE_MEDIA allow
 fi
 PKGOPS=`appops get $PKG`
-UID=`dumpsys package $PKG 2>/dev/null | grep -m 1 userId= | sed 's/    userId=//'`
+UID=`dumpsys package $PKG 2>/dev/null | grep -m 1 userId= | sed 's|    userId=||g'`
 if [ "$UID" -gt 9999 ]; then
   appops set --uid "$UID" LEGACY_STORAGE allow
   if [ "$API" -ge 29 ]; then
@@ -64,14 +64,17 @@ fi
 
 # grant
 PKG=com.miui.home
-pm grant $PKG android.permission.READ_CALENDAR
-pm grant $PKG android.permission.WRITE_CALENDAR
-pm grant $PKG android.permission.READ_PHONE_STATE
-pm grant $PKG android.permission.CALL_PHONE
-pm grant $PKG android.permission.CAMERA
-pm grant $PKG android.permission.READ_CONTACTS
-appops set $PKG GET_USAGE_STATS allow
-grant_permission
+if pm list packages | grep $PKG; then
+  pm grant $PKG android.permission.WRITE_SECURE_SETTINGS
+  pm grant $PKG android.permission.READ_CALENDAR
+  pm grant $PKG android.permission.WRITE_CALENDAR
+  pm grant $PKG android.permission.READ_PHONE_STATE
+  pm grant $PKG android.permission.CALL_PHONE
+  pm grant $PKG android.permission.CAMERA
+  pm grant $PKG android.permission.READ_CONTACTS
+  appops set $PKG GET_USAGE_STATS allow
+  grant_permission
+fi
 
 # grant
 PKG=com.miui.miwallpaper

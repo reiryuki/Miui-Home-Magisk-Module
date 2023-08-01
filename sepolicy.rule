@@ -1,63 +1,48 @@
 ## MiuiHome
 
 # debug
-dontaudit system_server system_file file write
-allow     system_server system_file file write
+allow system_server system_file file write
 
 # context
 create { system_lib_file vendor_file vendor_configs_file vendor_overlay_file theme_data_file app_data_file }
-dontaudit { system_file system_lib_file vendor_file vendor_configs_file vendor_overlay_file theme_data_file app_data_file } labeledfs filesystem associate
-allow     { system_file system_lib_file vendor_file vendor_configs_file vendor_overlay_file theme_data_file app_data_file } labeledfs filesystem associate
-dontaudit init { system_file system_lib_file vendor_file vendor_configs_file vendor_overlay_file theme_data_file app_data_file } { dir file } relabelfrom
-allow     init { system_file system_lib_file vendor_file vendor_configs_file vendor_overlay_file theme_data_file app_data_file } { dir file } relabelfrom
+allow { system_file system_lib_file vendor_file vendor_configs_file vendor_overlay_file theme_data_file app_data_file } labeledfs filesystem associate
+allow init { system_file system_lib_file vendor_file vendor_configs_file vendor_overlay_file theme_data_file app_data_file } { dir file } relabelfrom
 
 # service_manager
 allow { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } default_android_service service_manager find
 
 # dir
-dontaudit { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } { theme_data_file app_data_file } dir { read open add_name search }
-allow     { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } { theme_data_file app_data_file } dir { read open add_name search }
+allow { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } { theme_data_file app_data_file } dir { read open add_name search }
 
 # file
-dontaudit { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } { theme_data_file app_data_file } file { create write open getattr unlink }
-allow     { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } { theme_data_file app_data_file } file { create write open getattr unlink }
-dontaudit { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } apk_data_file file ioctl
-allow     { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } apk_data_file file ioctl
-dontaudit { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } incremental_prop file { read open getattr }
-allow     { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } incremental_prop file { read open getattr }
-dontaudit { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } vendor_default_prop file map
-allow     { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } vendor_default_prop file map
+allow { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } { theme_data_file app_data_file } file { create write open getattr unlink }
+allow { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } apk_data_file file ioctl
+allow { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } incremental_prop file { read open getattr }
+allow { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } vendor_default_prop file map
 
 # unix_stream_socket
-dontaudit { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } zygote unix_stream_socket getopt
-allow     { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } zygote unix_stream_socket getopt
+allow { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } zygote unix_stream_socket getopt
 
 
 ## GlobalFashiongallery
 
 # fd
-dontaudit rs { surfaceflinger hal_graphics_allocator_default } fd use
-allow     rs { surfaceflinger hal_graphics_allocator_default } fd use
+allow rs { surfaceflinger hal_graphics_allocator_default } fd use
 
 # tcp_socket
-dontaudit rs { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } tcp_socket { read write }
-allow     rs { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } tcp_socket { read write }
+allow rs { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } tcp_socket { read write }
 
 # fifo_file
-dontaudit rs { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } fifo_file { read write }
-allow     rs { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } fifo_file { read write }
+allow rs { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } fifo_file { read write }
 
 # unix_stream_socket
-dontaudit rs surfaceflinger unix_stream_socket { read write }
-allow     rs surfaceflinger unix_stream_socket { read write }
+allow rs surfaceflinger unix_stream_socket { read write }
 
 # file
-dontaudit { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } rs_exec file { read open execute execute_no_trans getattr }
-allow     { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } rs_exec file { read open execute execute_no_trans getattr }
-dontaudit { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } app_data_file file execute
-allow     { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } app_data_file file execute
-dontaudit { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } proc_pid_max file { read open }
-allow     { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } proc_pid_max file { read open }
+allow { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } rs_exec file { read open execute execute_no_trans getattr }
+allow { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } app_data_file file execute
+allow { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } proc_pid_max file { read open }
+allow { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } app_exec_data_file file { read write open execute }
 
 
 
