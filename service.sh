@@ -70,7 +70,7 @@ if pm list packages | grep $PKG; then
   pm grant $PKG android.permission.WRITE_CALENDAR
   pm grant $PKG android.permission.READ_PHONE_STATE
   pm grant $PKG android.permission.CALL_PHONE
-  pm grant $PKG android.permission.CAMERA
+  #pm grant $PKG android.permission.CAMERA
   pm grant $PKG android.permission.READ_CONTACTS
   appops set $PKG GET_USAGE_STATS allow
   grant_permission

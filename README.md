@@ -19,8 +19,6 @@
 - Android 5 and up
 - Magisk or KernelSU installed
 - Miui Core Magisk Module installed
-- Miui Home app requires any AOSP signatured ROM
-- Miui Home app requires disabled Android Signature Verifications in non-AOSP signatured ROM https://t.me/androidryukimodsdiscussions/58331
 - App vault requires Miui Security Magisk Module installed except in global mode
 - For v1.5 until v1.7 requires Miui Settings Mod Magisk Module installed, otherwise not
 
@@ -34,7 +32,6 @@
 - Go to app info of Mi Wallpaper Carousel and App vault and allow their network access
 - Change your default launcher to this Miui Home system launcher via Settings
 - To use Mi Wallpaper Carousel slideshow, long tap home screen, tap wallpaper image, tap Live Wallpaper Picker, tap Mi Wallpaper Carousel, set wallpaper both first, then enable slideshow via Mi Wallpaper Carousel app
-- If Miui Home app is not installed, it means you are not using AOSP signatured ROM and it requires to disable Android Signature Verifications https://t.me/androidryukimodsdiscussions/58331 so that Miui Home app can be installed to your ROM
 
 ## Tested on
 - Android 11 DotOS ROM
@@ -44,6 +41,7 @@
 
 ## Known Issues
 - Grey colored status bar background
+- Uninstalling an app via home launcher needs 2 confirmations
 - Recents provider can't close recents apps
 - Navbar gestures doesn't work while using full screen swipe gestures if the recents provider is activated
 
