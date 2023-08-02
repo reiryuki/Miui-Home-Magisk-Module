@@ -5,7 +5,6 @@
         <permission name="android.permission.WRITE_CALENDAR" fixed="false"/>
         <permission name="android.permission.READ_PHONE_STATE" fixed="false"/>
         <permission name="android.permission.CALL_PHONE" fixed="false"/>
-        <permission name="android.permission.CAMERA" fixed="false"/>
         <permission name="android.permission.READ_CONTACTS" fixed="false"/>
         <permission name="android.permission.READ_EXTERNAL_STORAGE" fixed="false"/>
         <permission name="android.permission.WRITE_EXTERNAL_STORAGE" fixed="false"/>
