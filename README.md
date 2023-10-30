@@ -20,18 +20,18 @@
 - Magisk or KernelSU installed
 - Miui Core Magisk Module installed
 - App vault requires Miui Security Magisk Module installed except in global mode
-- For v1.5 until v1.7 requires Miui Settings Mod Magisk Module installed, otherwise not
+- For v1.6 and v1.7, it requires Miui Settings Mod Magisk Module installed, otherwise not
 
 ## Installation Guide & Download Link
 - Install Miui Core Magisk Module first: https://github.com/reiryuki/Miui-Core-Magisk-Module
-- v1.5 until v1.7 requires Miui Settings Mod Magisk Module https://github.com/reiryuki/Miui-Settings-Mod-Magisk-Module, otherwise not
+- If you want to activate the recents provider, READ Optionals bellow!
 - Install this module https://www.pling.com/p/1680776/ via Magisk app or KernelSU app or Recovery if Magisk installed
 - If you want App Vault to be working, install Miui Security Magisk Module: https://github.com/reiryuki/Miui-Security-Center-Magisk-Module except in global mode
 - Reboot
 - If you are using KernelSU, you need to allow superuser list manually all package name listed in package.txt (and your home launcher app also) (enable show system apps) and reboot after
 - Go to app info of Mi Wallpaper Carousel and App vault and allow their network access
 - Change your default launcher to this Miui Home system launcher via Settings
-- To use Mi Wallpaper Carousel slideshow, long tap home screen, tap wallpaper image, tap Live Wallpaper Picker, tap Mi Wallpaper Carousel, set wallpaper both first, then enable slideshow via Mi Wallpaper Carousel app
+- To use Mi Wallpaper Carousel slideshow, long tap home screen, tap wallpaper image, tap Live Wallpaper Picker, tap Mi Wallpaper Carousel, set wallpaper both first, then enable slideshow via Mi Wallpaper Carousel app.
 
 ## Tested on
 - Android 11 DotOS ROM
@@ -41,17 +41,19 @@
 
 ## Known Issues
 - Grey colored status bar background
-- Uninstalling an app via home launcher needs 2 confirmations
+- Status bar icons turns to black in dark theme
+- Uninstall an app requires 2 confirmations
 - Recents provider can't close recents apps
 - Navbar gestures doesn't work while using full screen swipe gestures if the recents provider is activated
+- Some widgets doesn't work
 
 ## Optionals
-- https://t.me/androidryukimodsdiscussions/60861
 - https://t.me/androidryukimodsdiscussions/54012
+- Global: https://t.me/androidryukimodsdiscussions/60861
 
 ## Troubleshootings
-- https://t.me/androidryukimodsdiscussions/29836
 - https://t.me/androidryukimodsdiscussions/64467
+- Global: https://t.me/androidryukimodsdiscussions/29836
 
 ## Support & Bug Report
 - https://t.me/androidryukimodsdiscussions/2618

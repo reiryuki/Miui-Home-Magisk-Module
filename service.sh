@@ -1,9 +1,11 @@
 MODPATH=${0%/*}
-API=`getprop ro.build.version.sdk`
 
 # log
 exec 2>$MODPATH/debug.log
 set -x
+
+# var
+API=`getprop ro.build.version.sdk`
 
 # property
 PROP=`getprop ro.product.device`
@@ -64,7 +66,7 @@ fi
 
 # grant
 PKG=com.miui.home
-if pm list packages | grep $PKG; then
+if appops get $PKG > /dev/null 2>&1; then
   pm grant $PKG android.permission.WRITE_SECURE_SETTINGS
   pm grant $PKG android.permission.READ_CALENDAR
   pm grant $PKG android.permission.WRITE_CALENDAR
@@ -87,7 +89,7 @@ grant_permission
 
 # grant
 PKG=com.android.quicksearchbox
-if pm list packages | grep $PKG; then
+if appops get $PKG > /dev/null 2>&1; then
   pm grant $PKG android.permission.READ_CONTACTS
   pm grant $PKG android.permission.READ_PHONE_STATE
   grant_permission
@@ -95,13 +97,13 @@ fi
 
 # grant
 PKG=com.miui.personalassistant
-if pm list packages | grep $PKG; then
+if appops get $PKG > /dev/null 2>&1; then
   grant_permission
 fi
 
 # grant
 PKG=com.mi.android.globalminusscreen
-if pm list packages | grep $PKG; then
+if appops get $PKG > /dev/null 2>&1; then
   pm grant $PKG android.permission.READ_CALENDAR
   pm grant $PKG android.permission.WRITE_CALENDAR
   appops set $PKG GET_USAGE_STATS allow

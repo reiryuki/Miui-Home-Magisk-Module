@@ -100,13 +100,6 @@ chmod 0777 $DIR
 chown 1000.1000 $DIR
 chcon u:object_r:app_data_file:s0 $DIR
 
-# cleaning
-FILE=$MODPATH/cleaner.sh
-if [ -f $FILE ]; then
-  . $FILE
-  rm -f $FILE
-fi
-
 # permission
 if [ "$API" -ge 26 ]; then
   DIRS=`find $MODPATH/vendor\
@@ -130,7 +123,12 @@ if [ "$API" -ge 26 ]; then
   fi
 fi
 
-
+# cleaning
+FILE=$MODPATH/cleaner.sh
+if [ -f $FILE ]; then
+  . $FILE
+  mv -f $FILE $FILE\.txt
+fi
 
 
 
