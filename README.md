@@ -45,6 +45,7 @@
 - Some widgets doesn't work
 - Uninstall app requires 2 confirmations
 - Gesture navigation doesn't work except in AOSP signatured ROM or disabled Android Signature Verification in Android 13 and bellow only
+- Minimize button in Freeform window doesn't work because I'm using "setTaskAlwaysOnTop" method so that it can be showed on top of current task
 
 ## Optionals
 - https://t.me/androidryukimodsdiscussions/54012
