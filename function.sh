@@ -10,30 +10,63 @@ done
 }
 mount_partitions_in_recovery() {
 if [ "$BOOTMODE" != true ]; then
-  DIR=/dev/block/bootdevice/by-name
-  DIR2=/dev/block/mapper
-  mount -o rw -t auto $DIR/vendor$SLOT /vendor\
-  || mount -o rw -t auto $DIR2/vendor$SLOT /vendor\
-  || mount -o rw -t auto $DIR/cust /vendor\
-  || mount -o rw -t auto $DIR2/cust /vendor
-  mount -o rw -t auto $DIR/product$SLOT /product\
-  || mount -o rw -t auto $DIR2/product$SLOT /product
-  mount -o rw -t auto $DIR/system_ext$SLOT /system_ext\
-  || mount -o rw -t auto $DIR2/system_ext$SLOT /system_ext
-  mount -o rw -t auto $DIR/odm$SLOT /odm\
-  || mount -o rw -t auto $DIR2/odm$SLOT /odm
-  mount -o rw -t auto $DIR/my_product /my_product\
-  || mount -o rw -t auto $DIR2/my_product /my_product
-  mount -o rw -t auto $DIR/userdata /data\
-  || mount -o rw -t auto $DIR2/userdata /data
-  mount -o rw -t auto $DIR/cache /cache\
-  || mount -o rw -t auto $DIR2/cache /cache
-  mount -o rw -t auto $DIR/persist /persist\
-  || mount -o rw -t auto $DIR2/persist /persist
-  mount -o rw -t auto $DIR/metadata /metadata\
-  || mount -o rw -t auto $DIR2/metadata /metadata
-  mount -o rw -t auto $DIR/cust /cust\
-  || mount -o rw -t auto $DIR2/cust /cust
+  BLOCK=/dev/block/bootdevice/by-name
+  BLOCK2=/dev/block/mapper
+  ui_print "- Recommended to mount all partitions first"
+  ui_print "  before installing this module"
+  ui_print " "
+  DIR=/vendor
+  if [ -d $DIR ] && ! is_mounted $DIR; then
+    mount -o rw -t auto $BLOCK$DIR$SLOT $DIR\
+    || mount -o rw -t auto $BLOCK2$DIR$SLOT $DIR\
+    || mount -o rw -t auto $BLOCK/cust $DIR\
+    || mount -o rw -t auto $BLOCK2/cust $DIR
+  fi
+  DIR=/product
+  if [ -d $DIR ] && ! is_mounted $DIR; then
+    mount -o rw -t auto $BLOCK$DIR$SLOT $DIR\
+    || mount -o rw -t auto $BLOCK2$DIR$SLOT $DIR
+  fi
+  DIR=/system_ext
+  if [ -d $DIR ] && ! is_mounted $DIR; then
+    mount -o rw -t auto $BLOCK$DIR$SLOT $DIR\
+    || mount -o rw -t auto $BLOCK2$DIR$SLOT $DIR
+  fi
+  DIR=/odm
+  if [ -d $DIR ] && ! is_mounted $DIR; then
+    mount -o rw -t auto $BLOCK$DIR$SLOT $DIR\
+    || mount -o rw -t auto $BLOCK2$DIR$SLOT $DIR
+  fi
+  DIR=/my_product
+  if [ -d $DIR ] && ! is_mounted $DIR; then
+    mount -o rw -t auto $BLOCK$DIR $DIR\
+    || mount -o rw -t auto $BLOCK2$DIR $DIR
+  fi
+  DIR=/data
+  if [ -d $DIR ] && ! is_mounted $DIR; then
+    mount -o rw -t auto $BLOCK/userdata $DIR\
+    || mount -o rw -t auto $BLOCK2/userdata $DIR
+  fi
+  DIR=/cache
+  if [ -d $DIR ] && ! is_mounted $DIR; then
+    mount -o rw -t auto $BLOCK$DIR $DIR\
+    || mount -o rw -t auto $BLOCK2$DIR $DIR
+  fi
+  DIR=/persist
+  if [ -d $DIR ] && ! is_mounted $DIR; then
+    mount -o rw -t auto $BLOCK$DIR $DIR\
+    || mount -o rw -t auto $BLOCK2$DIR $DIR
+  fi
+  DIR=/metadata
+  if [ -d $DIR ] && ! is_mounted $DIR; then
+    mount -o rw -t auto $BLOCK$DIR $DIR\
+    || mount -o rw -t auto $BLOCK2$DIR $DIR
+  fi
+  DIR=/cust
+  if [ -d $DIR ] && ! is_mounted $DIR; then
+    mount -o rw -t auto $BLOCK$DIR $DIR\
+    || mount -o rw -t auto $BLOCK2$DIR $DIR
+  fi
 fi
 }
 remove_sepolicy_rule() {

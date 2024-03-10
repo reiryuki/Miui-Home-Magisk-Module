@@ -5,10 +5,10 @@
 - The MIT license specified here is for the Magisk Module only, not for Miui apps.
 
 ## Descriptions
-- System Launcher, Mi Wallpaper, Mi Wallpaper Carousel, Mi Search, & App Vault by Xiaomi Inc. ported and integrated as a Magisk Module for all supported and rooted devices with Magisk
+- System launcher & Mi Wallpaper Carousel by Xiaomi Inc. ported and integrated as a Magisk Module for all supported and rooted devices with Magisk
 
 ## Sources
-- https://apkmirror.com com.miui.home, com.mfashiongallery.emag, com.miui.miwallpaper, com.miui.personalassistant, com.mi.android.globalminusscreen, & com.android.quicksearchbox by Xiaomi Inc.
+- https://apkmirror.com com.miui.home, com.mfashiongallery.emag, com.miui.miwallpaper, & com.android.quicksearchbox by Xiaomi Inc.
 
 ## Screenshots
 - https://t.me/androidryukimods/370
@@ -19,18 +19,17 @@
 - Android 5 and up
 - Magisk or KernelSU installed
 - Miui Core Magisk Module installed
-- App vault requires Miui Security Magisk Module installed except in global mode
-- For v1.6 and v1.7, it requires Miui Settings Mod Magisk Module installed, otherwise not
 
 ## Installation Guide & Download Link
 - Install Miui Core Magisk Module first: https://github.com/reiryuki/Miui-Core-Magisk-Module
 - If you want to activate the recents provider, READ Optionals bellow!
 - Install this module https://www.pling.com/p/1680776/ via Magisk app or KernelSU app or Recovery if Magisk installed
-- If you want App Vault to be working, install Miui Security Magisk Module: https://github.com/reiryuki/Miui-Security-Center-Magisk-Module except in global mode
+- At the first installation, you need to reboot and re-install this module again afterwards to grant DEVICE_POWER permission (except in AOSP signatured ROM).
+- If you want App Vault to be working, install Miui App Vault Magisk Module: https://github.com/reiryuki/Miui-App-Vault-Magisk-Module & Miui Security Magisk Module: https://github.com/reiryuki/Miui-Security-Center-Magisk-Module except in global mode
 - Reboot
-- If you are using KernelSU, you need to allow superuser list manually all package name listed in package.txt (and your home launcher app also) (enable show system apps) and reboot after
-- Go to app info of Mi Wallpaper Carousel and App vault and allow their network access
-- Change your default launcher to this Miui Home system launcher via Settings
+- If you are using KernelSU, you need to allow superuser list manually all package name listed in package.txt (and your home launcher app also) (enable show system apps) and reboot afterwards
+- Go to app info of Mi Wallpaper Carousel and allow the network access
+- Change your default launcher to this Miui Home System Launcher via Settings app
 - To use Mi Wallpaper Carousel slideshow, long tap home screen, tap wallpaper image, tap Live Wallpaper Picker, tap Mi Wallpaper Carousel, set wallpaper both first, then enable slideshow via Mi Wallpaper Carousel app.
 
 ## Tested on
@@ -38,14 +37,14 @@
 - Android 12 AncientOS ROM
 - Android 12.1 Nusantara ROM
 - Android 13 AOSP ROM & CrDroid ROM
+- Android 14 LineageOS ROM
 
 ## Known Issues
 - Grey colored status bar background
 - Status bar icons turns to black in dark theme
-- Uninstall an app requires 2 confirmations
-- Recents provider can't close recents apps
-- Navbar gestures doesn't work while using full screen swipe gestures if the recents provider is activated
 - Some widgets doesn't work
+- Uninstall app requires 2 confirmations
+- Gesture navigation doesn't work except in AOSP signatured ROM or disabled Android Signature Verification in Android 13 and bellow only
 
 ## Optionals
 - https://t.me/androidryukimodsdiscussions/54012
@@ -59,14 +58,11 @@
 - https://t.me/androidryukimodsdiscussions/2618
 - If you don't do above, issues will be closed immediately
 
-## Credits and contributors
+## Credits and Contributors
 - https://t.me/androidryukimodsdiscussions
 - You can contribute ideas about this Magisk Module here: https://t.me/androidappsportdevelopment
 
-## Thanks for Donations
-This Magisk Module is always will be free but you can however show us that you are care by making a donations:
-- https://ko-fi.com/reiryuki
-- https://www.paypal.me/reiryuki
+## Sponsors
 - https://t.me/androidryukimodsdiscussions/2619
 
 

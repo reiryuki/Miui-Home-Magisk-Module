@@ -13,6 +13,7 @@ allow { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untru
 
 # dir
 allow { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } { theme_data_file app_data_file } dir { read open add_name search }
+allow { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } apk_data_file dir write
 
 # file
 allow { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } { theme_data_file app_data_file } file { create write open getattr unlink }

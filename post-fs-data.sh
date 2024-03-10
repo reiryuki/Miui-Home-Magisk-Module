@@ -47,7 +47,6 @@ FILE=$MODPATH/sepolicy.pfsd
 sepolicy_sh
 
 # list
-(
 PKGS="`cat $MODPATH/package.txt`
        com.miui.home:res_can_worker
        com.mfashiongallery.emag:gallery_wallpaper
@@ -55,50 +54,54 @@ PKGS="`cat $MODPATH/package.txt`
        com.miui.miwallpaper:daemon
        com.miui.miwallpaper:mamlSuperWallpaper
        com.miui.miwallpaper:settings
-       com.mi.android.globalminusscreen:playcore_missing_splits_activity
        com.android.quicksearchbox:widgetProvider
        com.android.quicksearchbox:pushservice"
 for PKG in $PKGS; do
-  magisk --denylist rm $PKG
-  magisk --sulist add $PKG
+  magisk --denylist rm $PKG 2>/dev/null
+  magisk --sulist add $PKG 2>/dev/null
 done
-FILE=$MODPATH/tmp_file
-magisk --hide sulist 2>$FILE
-if [ "`cat $FILE`" == 'SuList is enforced' ]; then
+if magisk magiskhide sulist; then
   for PKG in $PKGS; do
-    magisk --hide add $PKG
+    magisk magiskhide add $PKG
   done
 else
   for PKG in $PKGS; do
-    magisk --hide rm $PKG
+    magisk magiskhide rm $PKG
   done
 fi
-rm -f $FILE
-) 2>/dev/null
 
 # conflict
 #rtouch /data/adb/modules/quickstepswitcher/disable
 #rtouch /data/adb/modules/quickswitch/disable
 
+# patch plat_seapp_contexts
+#FILE=/system/etc/selinux/plat_seapp_contexts
+#rm -f $MODPATH$FILE
+#if ! grep 'user=system seinfo=default domain=system_app type=system_app_data_file' $FILE; then
+#  cp -af $FILE $MODPATH$FILE
+#  sed -i '1i\
+#user=system seinfo=default domain=system_app type=system_app_data_file' $MODPATH$FILE
+#fi
+
 # directory
 DIR=/data/system/theme
-mkdir -p $DIR
+mkdir -p $DIR/fonts
 #chmod 0775 $DIR
 #chown oem_9801.oem_9801 $DIR
 #chcon u:object_r:theme_data_file:s0 $DIR
-chmod 0777 $DIR
-chown 1000.1000 $DIR
-chcon u:object_r:app_data_file:s0 $DIR
+chmod -R 0777 $DIR
+chown -R 1000.1000 $DIR
+chcon -R u:object_r:app_data_file:s0 $DIR
 
 # directory
 DIR=/data/system/theme_magic
-mkdir -p $DIR
+mkdir -p $DIR/video
 #chmod 0775 $DIR
 #chown oem_9801.oem_9801 $DIR
 #chcon u:object_r:theme_data_file:s0 $DIR
-chmod 0777 $DIR
-chown 1000.1000 $DIR
-chcon u:object_r:app_data_file:s0 $DIR
+chmod -R 0777 $DIR
+chown -R 1000.1000 $DIR
+chcon -R u:object_r:app_data_file:s0 $DIR
 
 # permission
 if [ "$API" -ge 26 ]; then
@@ -127,7 +130,7 @@ fi
 FILE=$MODPATH/cleaner.sh
 if [ -f $FILE ]; then
   . $FILE
-  mv -f $FILE $FILE\.txt
+  mv -f $FILE $FILE.txt
 fi
 
 
