@@ -159,23 +159,19 @@ for NAME in $NAMES; do
     sh $FILE
     rm -f $FILE
   fi
-  rm -rf /metadata/magisk/$NAME
-  rm -rf /mnt/vendor/persist/magisk/$NAME
-  rm -rf /persist/magisk/$NAME
-  rm -rf /data/unencrypted/magisk/$NAME
-  rm -rf /cache/magisk/$NAME
-  rm -rf /cust/magisk/$NAME
+  rm -rf /metadata/magisk/$NAME\
+   /mnt/vendor/persist/magisk/$NAME\
+   /persist/magisk/$NAME\
+   /data/unencrypted/magisk/$NAME\
+   /cache/magisk/$NAME\
+   /cust/magisk/$NAME
 done
 }
-
-# conflict
-NAMES=MiWallpaperCarousel
-conflict
 
 # recents
 if [ "`grep_prop miui.recents $OPTIONALS`" == 1 ]; then
   RECENTS=true
-  ui_print "- Miui Home recents provider will be activated"
+  ui_print "- $MODNAME recents provider will be activated"
   ui_print "  Quick Switch module will be disabled"
   touch /data/adb/modules/quickstepswitcher/disable
   touch /data/adb/modules/quickswitch/disable
@@ -206,12 +202,12 @@ if [ "`grep_prop data.cleanup $OPTIONALS`" == 1 ]; then
   ui_print "- Cleaning-up $MODID data..."
   cleanup
   ui_print " "
-elif [ -d $DIR ]\
-&& [ "$PREVMODNAME" != "$MODNAME" ]; then
-  ui_print "- Different version detected"
-  ui_print "  Cleaning-up $MODID data..."
-  cleanup
-  ui_print " "
+#elif [ -d $DIR ]\
+#&& [ "$PREVMODNAME" != "$MODNAME" ]; then
+#  ui_print "- Different version detected"
+#  ui_print "  Cleaning-up $MODID data..."
+#  cleanup
+#  ui_print " "
 fi
 
 # function

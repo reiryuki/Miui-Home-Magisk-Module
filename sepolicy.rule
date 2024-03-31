@@ -1,5 +1,3 @@
-## MiuiHome
-
 # debug
 allow system_server system_file file write
 
@@ -23,40 +21,6 @@ allow { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untru
 
 # unix_stream_socket
 allow { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } zygote unix_stream_socket getopt
-
-
-## GlobalFashiongallery
-
-# fd
-allow rs { surfaceflinger hal_graphics_allocator_default } fd use
-
-# tcp_socket
-allow rs { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } tcp_socket { read write }
-
-# fifo_file
-allow rs { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } fifo_file { read write }
-
-# unix_stream_socket
-allow rs surfaceflinger unix_stream_socket { read write }
-
-# file
-allow { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } rs_exec file { read open execute execute_no_trans getattr }
-allow { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } app_data_file file execute
-allow { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } proc_pid_max file { read open }
-allow { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } app_exec_data_file file { read write open execute }
-allow installd app_exec_data_file file getattr
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

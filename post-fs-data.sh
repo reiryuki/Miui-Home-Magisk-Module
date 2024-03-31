@@ -49,11 +49,6 @@ sepolicy_sh
 # list
 PKGS="`cat $MODPATH/package.txt`
        com.miui.home:res_can_worker
-       com.mfashiongallery.emag:gallery_wallpaper
-       com.mfashiongallery.emag:pushservice
-       com.miui.miwallpaper:daemon
-       com.miui.miwallpaper:mamlSuperWallpaper
-       com.miui.miwallpaper:settings
        com.android.quicksearchbox:widgetProvider
        com.android.quicksearchbox:pushservice"
 for PKG in $PKGS; do

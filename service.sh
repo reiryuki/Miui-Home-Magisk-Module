@@ -68,34 +68,21 @@ fi
 
 # grant
 PKG=com.miui.home
-if appops get $PKG > /dev/null 2>&1; then
-  pm grant $PKG android.permission.WRITE_SECURE_SETTINGS
-  pm grant $PKG android.permission.READ_CALENDAR
-  pm grant $PKG android.permission.WRITE_CALENDAR
-  pm grant $PKG android.permission.READ_PHONE_STATE
-  pm grant $PKG android.permission.CALL_PHONE
-  #pm grant $PKG android.permission.CAMERA
-  pm grant $PKG android.permission.READ_CONTACTS
-  appops set $PKG GET_USAGE_STATS allow
-  grant_permission
-fi
-
-# grant
-PKG=com.miui.miwallpaper
+pm grant $PKG android.permission.WRITE_SECURE_SETTINGS
+pm grant $PKG android.permission.READ_CALENDAR
+pm grant $PKG android.permission.WRITE_CALENDAR
 pm grant $PKG android.permission.READ_PHONE_STATE
-grant_permission
-
-# grant
-PKG=com.mfashiongallery.emag
+pm grant $PKG android.permission.CALL_PHONE
+#pm grant $PKG android.permission.CAMERA
+pm grant $PKG android.permission.READ_CONTACTS
+appops set $PKG GET_USAGE_STATS allow
 grant_permission
 
 # grant
 PKG=com.android.quicksearchbox
-if appops get $PKG > /dev/null 2>&1; then
-  pm grant $PKG android.permission.READ_CONTACTS
-  pm grant $PKG android.permission.READ_PHONE_STATE
-  grant_permission
-fi
+pm grant $PKG android.permission.READ_CONTACTS
+pm grant $PKG android.permission.READ_PHONE_STATE
+grant_permission
 
 
 

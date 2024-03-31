@@ -41,18 +41,6 @@ NAME="libmiuiblur.so
       libnativehelper.so"
 copy_library
 
-PKG=com.mfashiongallery.emag
-NAME="libmiuiblur.so
-      libmiuinative.so
-      libnativehelper.so"
-copy_library
-
-PKG=com.miui.miwallpaper
-NAME="libmiuiblur.so
-      libmiuinative.so
-      libnativehelper.so"
-copy_library
-
 PKG=com.android.quicksearchbox
 NAME="libmiuiblur.so
       libmiuinative.so

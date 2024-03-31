@@ -1,24 +1,24 @@
-# Miui Home & Mi Wallpaper Carousel Magisk Module
+# Miui Home Magisk Module
 
 ## DISCLAIMER
 - Miui apps are owned by Xiaomi™.
 - The MIT license specified here is for the Magisk Module only, not for Miui apps.
 
 ## Descriptions
-- System launcher & Mi Wallpaper Carousel by Xiaomi Inc. ported and integrated as a Magisk Module for all supported and rooted devices with Magisk
+- System launcher by Xiaomi Inc. ported and integrated as a Magisk Module for all supported and rooted devices with Magisk
 
 ## Sources
-- https://apkmirror.com com.miui.home, com.mfashiongallery.emag, com.miui.miwallpaper, & com.android.quicksearchbox by Xiaomi Inc.
+- https://apkmirror.com com.miui.home & com.android.quicksearchbox by Xiaomi Inc.
 
 ## Screenshots
 - https://t.me/androidryukimods/370
-- https://t.me/androidryukimods/361
 
 ## Requirements
 - NOT in Miui ROM
 - Android 5 and up
 - Magisk or KernelSU installed
 - Miui Core Magisk Module installed
+- Gesture navigation requires android.permission.INJECT_EVENTS. The permission can only be granted in AOSP signatured ROM or disabled Android Signature Verification in Android 13 and bellow.
 
 ## Installation Guide & Download Link
 - Install Miui Core Magisk Module first: https://github.com/reiryuki/Miui-Core-Magisk-Module
@@ -27,10 +27,8 @@
 - At the first installation, you need to reboot and re-install this module again afterwards to grant DEVICE_POWER permission (except in AOSP signatured ROM).
 - If you want App Vault to be working, install Miui App Vault Magisk Module: https://github.com/reiryuki/Miui-App-Vault-Magisk-Module & Miui Security Magisk Module: https://github.com/reiryuki/Miui-Security-Center-Magisk-Module except in global mode
 - Reboot
-- If you are using KernelSU, you need to allow superuser list manually all package name listed in package.txt (and your home launcher app also) (enable show system apps) and reboot afterwards
-- Go to app info of Mi Wallpaper Carousel and allow the network access
-- Change your default launcher to this Miui Home System Launcher via Settings app
-- To use Mi Wallpaper Carousel slideshow, long tap home screen, tap wallpaper image, tap Live Wallpaper Picker, tap Mi Wallpaper Carousel, set wallpaper both first, then enable slideshow via Mi Wallpaper Carousel app.
+- If you are using KernelSU, you need to allow superuser list manually all package name listed in package.txt (enable show system apps) and reboot afterwards
+- Change your default launcher to this Miui Home System Launcher via Settings app (or you can copy the content of default.sh and paste it to Termux app. Type su and grant root first!)
 
 ## Tested on
 - Android 11 DotOS ROM
@@ -40,12 +38,9 @@
 - Android 14 LineageOS ROM
 
 ## Known Issues
-- Grey colored status bar background
-- Status bar icons turns to black in dark theme
 - Some widgets doesn't work
 - Uninstall app requires 2 confirmations
-- Gesture navigation doesn't work except in AOSP signatured ROM or disabled Android Signature Verification in Android 13 and bellow only
-- Minimize button in Freeform window doesn't work because I'm using "setTaskAlwaysOnTop" method so that it can be showed on top of current task
+- Minimize button in Freeform window doesn't work because I'm using "setTaskAlwaysOnTop" method so it can be showed on top of current task
 
 ## Optionals
 - https://t.me/androidryukimodsdiscussions/54012
