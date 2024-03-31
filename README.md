@@ -29,6 +29,7 @@
 - Reboot
 - If you are using KernelSU, you need to allow superuser list manually all package name listed in package.txt (enable show system apps) and reboot afterwards
 - Change your default launcher to this Miui Home System Launcher via Settings app (or you can copy the content of default.sh and paste it to Termux app. Type su and grant root first!)
+- If you change from hardware navbar to software navbar or vice-versa, you need to force stop this launcher to fix display bug.
 
 ## Tested on
 - Android 11 DotOS ROM
