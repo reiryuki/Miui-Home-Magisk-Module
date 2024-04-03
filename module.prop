@@ -1,7 +1,7 @@
 id=MiuiHome
 name=Miui Home
-version=v1.14-R
-versionCode=14
+version=v1.15
+versionCode=15
 author=Rei Ryuki the Fixer
 description=System launcher by Xiaomi Inc. ported for any Android 5 and up non-Miui ROM.
 
