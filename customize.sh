@@ -171,11 +171,18 @@ done
 # recents
 if [ "`grep_prop miui.recents $OPTIONALS`" == 1 ]; then
   RECENTS=true
+  NAME=*RecentsOverlay.apk
   ui_print "- $MODNAME recents provider will be activated"
-  ui_print "  Quick Switch module will be disabled"
+  ui_print "- Quick Switch module will be disabled"
+  ui_print "- Renaming any other else module $NAME"
+  ui_print "  to $NAME.bak"
   touch /data/adb/modules/quickstepswitcher/disable
   touch /data/adb/modules/quickswitch/disable
   sed -i 's|#r||g' $MODPATH/post-fs-data.sh
+  FILES=`find /data/adb/modules* ! -path "*/$MODID/*" -type f -name $NAME`
+  for FILE in $FILES; do
+    mv -f $FILE $FILE.bak
+  done
   ui_print " "
 else
   RECENTS=false
@@ -319,7 +326,7 @@ ui_print "  doesn't work. You need to reinstall this module again"
 ui_print "  after reboot to grant permissions."
 }
 patch_runtime_permisions() {
-FILE=`find /data ! -path "/data/media/*" -type f -name runtime-permissions.xml`
+FILE=`find /data/system /data/misc* -type f -name runtime-permissions.xml`
 chmod 0600 $FILE
 if grep -q '<package name="com.miui.home" />' $FILE; then
   sed -i 's|<package name="com.miui.home" />|\
