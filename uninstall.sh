@@ -17,12 +17,6 @@ for PKG in $PKGS; do
   rm -rf /data/user*/"$UID"/$PKG
 done
 remove_sepolicy_rule
-#rm -rf /data/system/theme
-#rm -rf /data/system/theme_magic
-
-
-
-
 
 
 

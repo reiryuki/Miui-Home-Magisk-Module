@@ -30,6 +30,13 @@ if [ "`grep_prop debug.log $OPTIONALS`" == 1 ]; then
   ui_print " "
 fi
 
+# recovery
+if [ "$BOOTMODE" != true ]; then
+  MODPATH_UPDATE=`echo $MODPATH | sed 's|modules/|modules_update/|g'`
+  rm -f $MODPATH/update
+  rm -rf $MODPATH_UPDATE
+fi
+
 # run
 . $MODPATH/function.sh
 
@@ -63,8 +70,7 @@ else
 fi
 
 # miuicore
-if [ ! -d /data/adb/modules_update/MiuiCore ]\
-&& [ ! -d /data/adb/modules/MiuiCore ]; then
+if [ ! -d /data/adb/modules/MiuiCore ]; then
   ui_print "! Miui Core Magisk Module is not installed."
   ui_print "  Please read github installation guide!"
   abort
@@ -298,7 +304,8 @@ hide_oat
 # overlay
 if [ "$RECENTS" == true ] && [ ! -d /product/overlay ]; then
   ui_print "- Using /vendor/overlay/ instead of /product/overlay/"
-  mv -f $MODPATH/system/product $MODPATH/system/vendor
+  mkdir -p $MODPATH/system/vendor
+  mv -f $MODPATH/system/product/overlay $MODPATH/system/vendor
   ui_print " "
 fi
 
@@ -306,7 +313,6 @@ fi
 if [ ! -d /product/media ] && [ -d /system/media ]; then
   ui_print "- Using /system/media instead of /product/media"
   mv -f $MODPATH/system/product/media $MODPATH/system
-  rm -rf $MODPATH/system/product
   sed -i 's|/product|/system|g' $MODPATH/system/media/theme/.data/meta/*/*.mrm
   ui_print " "
 elif [ ! -d /product/media ] && [ ! -d /system/media ]; then
@@ -658,12 +664,10 @@ fi
 }
 
 # patch runtime-permissions.xml
-if [ "$RECENTS" == true ]; then
-  ui_print "- Granting permissions"
-  ui_print "  Please wait..."
-  patch_runtime_permisions
-  ui_print " "
-fi
+ui_print "- Granting permissions"
+ui_print "  Please wait..."
+patch_runtime_permisions
+ui_print " "
 
 
 

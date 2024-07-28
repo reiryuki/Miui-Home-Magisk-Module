@@ -5,7 +5,7 @@
 - The MIT license specified here is for the Magisk Module only, not for Miui apps.
 
 ## Descriptions
-- System launcher by Xiaomi Inc. ported and integrated as a Magisk Module for all supported and rooted devices with Magisk
+- Home launcher app by Xiaomi Inc. ported and integrated as a Magisk Module for all supported and rooted devices with Magisk
 
 ## Sources
 - https://apkmirror.com com.miui.home & com.android.quicksearchbox by Xiaomi Inc.
@@ -24,24 +24,18 @@
 - Install Miui Core Magisk Module first: https://github.com/reiryuki/Miui-Core-Magisk-Module
 - If you want to activate the recents provider, READ Optionals bellow!
 - Install this module https://www.pling.com/p/1680776/ via Magisk app or KernelSU app or Recovery if Magisk installed
-- At the first installation, you need to reboot and re-install this module again afterwards to grant DEVICE_POWER permission (except in AOSP signatured ROM).
 - If you want App Vault to be working, install Miui App Vault Magisk Module: https://github.com/reiryuki/Miui-App-Vault-Magisk-Module & Miui Security Magisk Module: https://github.com/reiryuki/Miui-Security-Center-Magisk-Module except in global mode
+- If you are using KernelSU, you need to disable Unmount Modules by Default in KernelSU app settings
 - Reboot
 - If you are using KernelSU, you need to allow superuser list manually all package name listed in package.txt (enable show system apps) and reboot afterwards
 - Change your default launcher to this Miui Home System Launcher via Settings app (or you can copy the content of default.sh and paste it to Termux app. Type su and grant root first!)
 - If you change from hardware navbar to software navbar or vice-versa, you need to force stop this launcher to fix display bug.
 
-## Tested on
-- Android 11 DotOS ROM
-- Android 12 AncientOS ROM
-- Android 12.1 Nusantara ROM
-- Android 13 AOSP ROM & CrDroid ROM
-- Android 14 LineageOS ROM
-
 ## Known Issues
 - Some widgets doesn't work
 - Uninstall app requires 2 confirmations
 - Minimize button in Freeform window doesn't work because I'm using "setTaskAlwaysOnTop" method so it can be showed on top of current task
+- Split screen doesn't work except this launcher is set as default launcher if the recents provider is activated
 
 ## Optionals
 - https://t.me/androidryukimodsdiscussions/54012

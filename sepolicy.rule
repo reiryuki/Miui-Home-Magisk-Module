@@ -2,19 +2,19 @@
 allow system_server system_file file write
 
 # context
-create { system_lib_file vendor_file vendor_configs_file vendor_overlay_file theme_data_file app_data_file }
-allow { system_file system_lib_file vendor_file vendor_configs_file vendor_overlay_file theme_data_file app_data_file } labeledfs filesystem associate
-allow init { system_file system_lib_file vendor_file vendor_configs_file vendor_overlay_file theme_data_file app_data_file } { dir file } relabelfrom
+create { system_lib_file vendor_file vendor_configs_file vendor_overlay_file theme_data_file system_data_file }
+allow { system_file system_lib_file vendor_file vendor_configs_file vendor_overlay_file theme_data_file system_data_file } labeledfs filesystem associate
+allow init { system_file system_lib_file vendor_file vendor_configs_file vendor_overlay_file theme_data_file system_data_file } { dir file } relabelfrom
 
 # service_manager
 allow { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } default_android_service service_manager find
 
 # dir
-allow { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } { theme_data_file app_data_file } dir { read open add_name search }
+allow { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } { theme_data_file system_data_file } dir { read open add_name search }
 allow { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } apk_data_file dir write
 
 # file
-allow { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } { theme_data_file app_data_file } file { create write open getattr unlink }
+allow { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } { theme_data_file system_data_file } file { create write open getattr unlink }
 allow { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } apk_data_file file ioctl
 allow { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } incremental_prop file { read open getattr }
 allow { system_app priv_app platform_app untrusted_app_29 untrusted_app_27 untrusted_app } vendor_default_prop file map

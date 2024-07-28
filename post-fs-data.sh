@@ -59,26 +59,6 @@ sepolicy_sh
 #user=system seinfo=default domain=system_app type=system_app_data_file' $MODPATH$FILE
 #fi
 
-# directory
-DIR=/data/system/theme
-mkdir -p $DIR/fonts
-#chmod 0775 $DIR
-#chown oem_9801.oem_9801 $DIR
-#chcon u:object_r:theme_data_file:s0 $DIR
-chmod -R 0777 $DIR
-chown -R 1000.1000 $DIR
-chcon -R u:object_r:app_data_file:s0 $DIR
-
-# directory
-DIR=/data/system/theme_magic
-mkdir -p $DIR/video
-#chmod 0775 $DIR
-#chown oem_9801.oem_9801 $DIR
-#chcon u:object_r:theme_data_file:s0 $DIR
-chmod -R 0777 $DIR
-chown -R 1000.1000 $DIR
-chcon -R u:object_r:app_data_file:s0 $DIR
-
 # permission
 if [ "$API" -ge 26 ]; then
   DIRS=`find $MODPATH/vendor\
@@ -86,12 +66,6 @@ if [ "$API" -ge 26 ]; then
   for DIR in $DIRS; do
     chown 0.2000 $DIR
   done
-  if [ -L $MODPATH/system/product ]\
-  && [ -d $MODPATH/product ]; then
-    chcon -R u:object_r:vendor_overlay_file:s0 $MODPATH/product/overlay
-  else
-    chcon -R u:object_r:vendor_overlay_file:s0 $MODPATH/system/product/overlay
-  fi
   if [ -L $MODPATH/system/vendor ]\
   && [ -d $MODPATH/vendor ]; then
     chcon -R u:object_r:vendor_file:s0 $MODPATH/vendor
