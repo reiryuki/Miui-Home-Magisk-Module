@@ -9,16 +9,17 @@
 
 ## Sources
 - https://apkmirror.com com.miui.home & com.android.quicksearchbox by Xiaomi Inc.
+- libmagiskpolicy.so: Kitsune Mask R6687BB53
 
 ## Screenshots
 - https://t.me/androidryukimods/370
 
 ## Requirements
 - NOT in Miui ROM
-- Android 5 and up
+- Android 5 (SDK 21) and up
 - Magisk or KernelSU installed
 - Miui Core Magisk Module installed
-- Gesture navigation requires android.permission.INJECT_EVENTS. The permission can only be granted in AOSP signatured ROM or disabled Android Signature Verification in Android 13 and bellow.
+- Gesture navigation requires android.permission.INJECT_EVENTS. The permission can only be granted in AOSP signatured ROM or disabled Android Signature Verification in Android 13 (SDK 33) and bellow.
 
 ## Installation Guide & Download Link
 - Install Miui Core Magisk Module first: https://github.com/reiryuki/Miui-Core-Magisk-Module
@@ -26,6 +27,7 @@
 - Install this module https://www.pling.com/p/1680776/ via Magisk app or KernelSU app or Recovery if Magisk installed
 - If you want App Vault to be working, install Miui App Vault Magisk Module: https://github.com/reiryuki/Miui-App-Vault-Magisk-Module & Miui Security Magisk Module: https://github.com/reiryuki/Miui-Security-Center-Magisk-Module except in global mode
 - If you are using KernelSU, you need to disable Unmount Modules by Default in KernelSU app settings
+- At the first installation, you need to reboot and re-install this module again afterwards to grant permissions (except in AOSP signatured ROM).
 - Reboot
 - If you are using KernelSU, you need to allow superuser list manually all package name listed in package.txt (enable show system apps) and reboot afterwards
 - Change your default launcher to this Miui Home System Launcher via Settings app (or you can copy the content of default.sh and paste it to Termux app. Type su and grant root first!)
@@ -39,11 +41,11 @@
 
 ## Optionals
 - https://t.me/androidryukimodsdiscussions/54012
-- Global: https://t.me/androidryukimodsdiscussions/60861
+- Global: https://t.me/ryukinotes/35
 
 ## Troubleshootings
 - https://t.me/androidryukimodsdiscussions/64467
-- Global: https://t.me/androidryukimodsdiscussions/29836
+- Global: https://t.me/ryukinotes/34
 
 ## Support & Bug Report
 - https://t.me/androidryukimodsdiscussions/2618
@@ -54,6 +56,6 @@
 - You can contribute ideas about this Magisk Module here: https://t.me/androidappsportdevelopment
 
 ## Sponsors
-- https://t.me/androidryukimodsdiscussions/2619
+- https://t.me/ryukinotes/25
 
 
