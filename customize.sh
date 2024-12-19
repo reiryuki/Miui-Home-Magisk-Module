@@ -340,15 +340,19 @@ ui_print "  then you need to reinstall this module, reboot,"
 ui_print "  & reinstall again to re-grant permissions."
 }
 warning_2() {
-ui_print "  Granting permissions at the first installation"
-ui_print "  doesn't work. You need to reinstall this module again"
-ui_print "  after reboot to grant permissions."
+ui_print "  If there is still crash or locking apps at recents doesn't"
+ui_print "  work, then you need to reinstall this module again"
+ui_print "  after reboot to re-grant permissions."
 }
 patch_runtime_permisions() {
-FILE=`find /data/system /data/misc* -type f -name runtime-permissions.xml`
-chmod 0600 $FILE
-if grep -q '<package name="com.miui.home" />' $FILE; then
-  sed -i 's|<package name="com.miui.home" />|\
+ui_print "- Granting permissions"
+ui_print "  Please wait..."
+# patching other than 0 causes bootloop
+FILES=`find /data/system/users/0 /data/misc_de/0 -type f -name runtime-permissions.xml`
+for FILE in $FILES; do
+  chmod 0600 $FILE
+  if grep -q '<package name="com.miui.home" />' $FILE; then
+    sed -i 's|<package name="com.miui.home" />|\
 <package name="com.miui.home">\
 <permission name="android.permission.INPUT_CONSUMER" granted="true" flags="0" />\
 <permission name="android.permission.REAL_GET_TASKS" granted="true" flags="0" />\
@@ -449,9 +453,9 @@ if grep -q '<package name="com.miui.home" />' $FILE; then
 <permission name="android.permission.MEDIA_CONTENT_CONTROL" granted="true" flags="0" />\
 <permission name="android.permission.DELETE_PACKAGES" granted="true" flags="0" />\
 </package>\n|g' $FILE
-  warning
-elif grep -q '<package name="com.miui.home"/>' $FILE; then
-  sed -i 's|<package name="com.miui.home"/>|\
+    warning
+  elif grep -q '<package name="com.miui.home"/>' $FILE; then
+    sed -i 's|<package name="com.miui.home"/>|\
 <package name="com.miui.home">\
 <permission name="android.permission.INPUT_CONSUMER" granted="true" flags="0" />\
 <permission name="android.permission.REAL_GET_TASKS" granted="true" flags="0" />\
@@ -552,23 +556,25 @@ elif grep -q '<package name="com.miui.home"/>' $FILE; then
 <permission name="android.permission.MEDIA_CONTENT_CONTROL" granted="true" flags="0" />\
 <permission name="android.permission.DELETE_PACKAGES" granted="true" flags="0" />\
 </package>\n|g' $FILE
-  warning
-elif grep -q '<package name="com.miui.home">' $FILE; then
-  COUNT=1
-  LIST=`cat $FILE | sed 's|><|>\n<|g'`
-  RES=`echo "$LIST" | grep -A$COUNT '<package name="com.miui.home">'`
-  until echo "$RES" | grep -q '</package>'; do
-    COUNT=`expr $COUNT + 1`
+    warning
+  elif grep -q '<package name="com.miui.home">' $FILE; then
+    {
+    COUNT=1
+    LIST=`cat $FILE | sed 's|><|>\n<|g'`
     RES=`echo "$LIST" | grep -A$COUNT '<package name="com.miui.home">'`
-  done
-  if ! echo "$RES" | grep -q 'name="android.permission.DEVICE_POWER" granted="true"'\
-  || ! echo "$RES" | grep -q 'name="android.permission.INTERACT_ACROSS_USERS_FULL" granted="true"'; then
-    PATCH=true
-  else
-    PATCH=false
-  fi
-  if [ "$PATCH" == true ]; then
-    sed -i 's|<package name="com.miui.home">|\
+    until echo "$RES" | grep -q '</package>'; do
+      COUNT=`expr $COUNT + 1`
+      RES=`echo "$LIST" | grep -A$COUNT '<package name="com.miui.home">'`
+    done
+    } 2>/dev/null
+    if ! echo "$RES" | grep -q 'name="android.permission.DEVICE_POWER" granted="true"'\
+    || ! echo "$RES" | grep -q 'name="android.permission.INTERACT_ACROSS_USERS_FULL" granted="true"'; then
+      PATCH=true
+    else
+      PATCH=false
+    fi
+    if [ "$PATCH" == true ]; then
+      sed -i 's|<package name="com.miui.home">|\
 <package name="com.miui.home">\
 <permission name="android.permission.INPUT_CONSUMER" granted="true" flags="0" />\
 <permission name="android.permission.REAL_GET_TASKS" granted="true" flags="0" />\
@@ -669,18 +675,121 @@ elif grep -q '<package name="com.miui.home">' $FILE; then
 <permission name="android.permission.MEDIA_CONTENT_CONTROL" granted="true" flags="0" />\
 <permission name="android.permission.DELETE_PACKAGES" granted="true" flags="0" />\
 </package>\n<package name="removed">|g' $FILE
-    warning
+      warning
+    fi
+  else
+    sed -i 's|</runtime-permissions>|\
+<package name="com.miui.home">\
+<permission name="android.permission.INPUT_CONSUMER" granted="true" flags="0" />\
+<permission name="android.permission.REAL_GET_TASKS" granted="true" flags="0" />\
+<permission name="android.permission.WRITE_SETTINGS" granted="true" flags="0" />\
+<permission name="miui.autoinstall.config.permission.AUTOINSTALL" granted="true" flags="0" />\
+<permission name="android.permission.SET_PROCESS_LIMIT" granted="true" flags="0" />\
+<permission name="android.permission.READ_CALENDAR" granted="true" flags="0" />\
+<permission name="android.permission.POST_NOTIFICATIONS" granted="true" flags="0" />\
+<permission name="android.permission.ACCESS_FINE_LOCATION" granted="true" flags="0" />\
+<permission name="android.permission.MODIFY_AUDIO_SETTINGS" granted="true" flags="0" />\
+<permission name="android.permission.MANAGE_EXTERNAL_STORAGE" granted="true" flags="0" />\
+<permission name="miui.os.permisson.INIT_MIUI_ENVIRONMENT" granted="true" flags="0" />\
+<permission name="android.miui.permission.SHELL" granted="true" flags="0" />\
+<permission name="android.permission.SYSTEM_ALERT_WINDOW" granted="true" flags="0" />\
+<permission name="android.permission.START_TASKS_FROM_RECENTS" granted="true" flags="0" />\
+<permission name="miui.permission.USE_INTERNAL_GENERAL_API" granted="true" flags="0" />\
+<permission name="android.permission.CHANGE_COMPONENT_ENABLED_STATE" granted="true" flags="0" />\
+<permission name="android.permission.INTERNAL_SYSTEM_WINDOW" granted="true" flags="0" />\
+<permission name="android.permission.BIND_WALLPAPER" granted="true" flags="0" />\
+<permission name="android.permission.START_ANY_ACTIVITY" granted="true" flags="0" />\
+<permission name="com.android.SystemUI.permission.TIGGER_TOGGLE" granted="true" flags="0" />\
+<permission name="android.permission.CHANGE_NETWORK_STATE" granted="true" flags="0" />\
+<permission name="android.permission.FOREGROUND_SERVICE" granted="true" flags="0" />\
+<permission name="android.permission.READ_MEDIA_VISUAL_USER_SELECTED" granted="true" flags="0" />\
+<permission name="android.permission.MANAGE_ACTIVITY_TASKS" granted="true" flags="0" />\
+<permission name="android.permission.RECEIVE_BOOT_COMPLETED" granted="true" flags="0" />\
+<permission name="android.permission.DEVICE_POWER" granted="true" flags="0" />\
+<permission name="com.miui.personalassistant.permission.ACCESS_ACTIVITY" granted="true" flags="0" />\
+<permission name="android.permission.REMOVE_TASKS" granted="true" flags="0" />\
+<permission name="android.permission.EXPAND_STATUS_BAR" granted="true" flags="0" />\
+<permission name="com.miui.home.launcher.permission.LOADING_STATUS" granted="true" flags="0" />\
+<permission name="android.permission.BLUETOOTH_CONNECT" granted="true" flags="0" />\
+<permission name="android.permission.BLUETOOTH" granted="true" flags="0" />\
+<permission name="com.android.alarm.permission.SET_ALARM" granted="true" flags="0" />\
+<permission name="miui.personalassistant.ACCESS_PROVIDER" granted="true" flags="0" />\
+<permission name="android.permission.GET_TASKS" granted="true" flags="0" />\
+<permission name="android.permission.INTERNET" granted="true" flags="0" />\
+<permission name="miui.permission.ACCESS_ALARM_PROVIDER" granted="true" flags="0" />\
+<permission name="android.permission.REORDER_TASKS" granted="true" flags="0" />\
+<permission name="android.permission.BLUETOOTH_ADMIN" granted="true" flags="0" />\
+<permission name="android.permission.UPDATE_DEVICE_STATS" granted="true" flags="0" />\
+<permission name="android.permission.READ_EXTERNAL_STORAGE" granted="true" flags="0" />\
+<permission name="android.permission.MANAGE_ACCESSIBILITY" granted="true" flags="0" />\
+<permission name="com.android.launcher.permission.WRITE_SETTINGS" granted="true" flags="0" />\
+<permission name="android.permission.CONTROL_REMOTE_APP_TRANSITION_ANIMATIONS" granted="true" flags="0" />\
+<permission name="android.permission.INTERACT_ACROSS_USERS_FULL" granted="true" flags="0" />\
+<permission name="android.permission.BIND_APPWIDGET" granted="true" flags="0" />\
+<permission name="android.permission.PACKAGE_USAGE_STATS" granted="true" flags="0" />\
+<permission name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" granted="true" flags="0" />\
+<permission name="android.permission.WRITE_SECURE_SETTINGS" granted="true" flags="0" />\
+<permission name="android.permission.ACCESS_COARSE_LOCATION" granted="true" flags="0" />\
+<permission name="android.permission.SET_ACTIVITY_WATCHER" granted="true" flags="0" />\
+<permission name="android.permission.STATUS_BAR_SERVICE" granted="true" flags="0" />\
+<permission name="com.android.systemui.permission.NOTIFICATION" granted="true" flags="0" />\
+<permission name="android.permission.READ_PHONE_STATE" granted="true" flags="0" />\
+<permission name="com.android.launcher.permission.READ_SETTINGS" granted="true" flags="0" />\
+<permission name="android.permission.ACCESS_DOWNLOAD_MANAGER" granted="true" flags="0" />\
+<permission name="android.permission.BROADCAST_STICKY" granted="true" flags="0" />\
+<permission name="android.permission.CALL_PHONE" granted="true" flags="0" />\
+<permission name="android.permission.READ_MEDIA_IMAGES" granted="true" flags="0" />\
+<permission name="android.permission.CHANGE_WIFI_STATE" granted="true" flags="0" />\
+<permission name="android.permission.MANAGE_USERS" granted="true" flags="0" />\
+<permission name="android.permission.SET_PREFERRED_APPLICATIONS" granted="true" flags="0" />\
+<permission name="android.permission.SET_WALLPAPER_COMPONENT" granted="true" flags="0" />\
+<permission name="android.permission.ACCESS_NETWORK_STATE" granted="true" flags="0" />\
+<permission name="android.permission.CAMERA" granted="true" flags="0" />\
+<permission name="android.permission.CHANGE_CONFIGURATION" granted="true" flags="0" />\
+<permission name="android.permission.INTERACT_ACROSS_USERS" granted="true" flags="0" />\
+<permission name="android.permission.SET_WALLPAPER" granted="true" flags="0" />\
+<permission name="android.permission.WRITE_CALENDAR" granted="true" flags="0" />\
+<permission name="android.permission.BROADCAST_CLOSE_SYSTEM_DIALOGS" granted="true" flags="0" />\
+<permission name="android.permission.READ_MEDIA_AUDIO" granted="true" flags="0" />\
+<permission name="android.permission.READ_MEDIA_VIDEO" granted="true" flags="0" />\
+<permission name="android.permission.REQUEST_DELETE_PACKAGES" granted="true" flags="0" />\
+<permission name="android.permission.BLUETOOTH_ADVERTISE" granted="true" flags="0" />\
+<permission name="android.permission.SET_WALLPAPER_HINTS" granted="true" flags="0" />\
+<permission name="android.permission.ALLOW_SLIPPERY_TOUCHES" granted="true" flags="0" />\
+<permission name="android.permission.READ_SYNC_SETTINGS" granted="true" flags="0" />\
+<permission name="android.permission.FORCE_STOP_PACKAGES" granted="true" flags="0" />\
+<permission name="android.permission.WRITE_EXTERNAL_STORAGE" granted="true" flags="0" />\
+<permission name="android.permission.VIBRATE" granted="true" flags="0" />\
+<permission name="android.permission.MANAGE_ACTIVITY_STACKS" granted="true" flags="0" />\
+<permission name="android.permission.CREATE_USERS" granted="true" flags="0" />\
+<permission name="android.permission.GET_DETAILED_TASKS" granted="true" flags="0" />\
+<permission name="android.permission.ACCESS_WIFI_STATE" granted="true" flags="0" />\
+<permission name="android.permission.REQUEST_INSTALL_PACKAGES" granted="true" flags="0" />\
+<permission name="android.permission.STATUS_BAR" granted="true" flags="0" />\
+<permission name="android.permission.READ_FRAME_BUFFER" granted="true" flags="0" />\
+<permission name="android.permission.QUERY_ALL_PACKAGES" granted="true" flags="0" />\
+<permission name="android.permission.DUMP" granted="true" flags="0" />\
+<permission name="android.permission.UNLIMITED_TOASTS" granted="true" flags="0" />\
+<permission name="android.permission.WAKE_LOCK" granted="true" flags="0" />\
+<permission name="android.permission.READ_CONTACTS" granted="true" flags="0" />\
+<permission name="android.permission.INJECT_EVENTS" granted="true" flags="0" />\
+<permission name="android.permission.UPDATE_APP_OPS_STATS" granted="true" flags="0" />\
+<permission name="android.permission.BLUETOOTH_SCAN" granted="true" flags="0" />\
+<permission name="android.permission.ACCESS_MEDIA_LOCATION" granted="true" flags="0" />\
+<permission name="android.permission.MEDIA_CONTENT_CONTROL" granted="true" flags="0" />\
+<permission name="android.permission.DELETE_PACKAGES" granted="true" flags="0" />\
+</package>\n</runtime-permissions>|g' $FILE
+    warning_2
   fi
-else
-  warning_2
-fi
+done
+ui_print " "
 }
 
 # patch runtime-permissions.xml
-ui_print "- Granting permissions"
-ui_print "  Please wait..."
-patch_runtime_permisions
-ui_print " "
+if [ "$API" -lt 35 ]; then
+  patch_runtime_permisions
+fi
+
 
 
 
